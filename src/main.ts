@@ -1,16 +1,24 @@
-import "@unocss/reset/normalize.css"
-import "@/assets/main.css"
 import "virtual:uno.css"
+import "@unocss/reset/tailwind.css"
+import "@/assets/main.css"
 
+import { useRequestDevToolsPlugin } from "vue-hooks-plus"
 import { createApp } from "vue"
-import { createPinia } from "pinia"
+import App from "@/App.vue"
 
-import App from "./App.vue"
-import router from "./router"
+import { setupStore } from "@/stores"
+import { setupRouter } from "@/router"
+import { setupI18n } from "@/module"
 
-const app = createApp(App)
+const bootstrap = () => {
+  const app = createApp(App)
 
-app.use(createPinia())
-app.use(router)
+  app.use(useRequestDevToolsPlugin)
+  setupStore(app)
+  setupI18n(app)
+  setupRouter(app)
 
-app.mount("#app")
+  app.mount("#app")
+}
+
+bootstrap()

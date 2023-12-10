@@ -4,7 +4,7 @@ import { defineConfig, loadEnv } from "vite"
 import vue from "@vitejs/plugin-vue"
 import path from "node:path"
 
-// i18n、mock
+// i18n、mock、UnoCSS
 import VueI18nPlugin from "@intlify/unplugin-vue-i18n/vite"
 import MockDevServerPlugin from "vite-plugin-mock-dev-server"
 import UnoCSS from "unocss/vite"
@@ -21,12 +21,13 @@ import Inspector from "unplugin-vue-inspector/vite"
 import Inspect from "vite-plugin-inspect"
 import VueDevTools from "vite-plugin-vue-devtools"
 import TsconfigPaths from "vite-tsconfig-paths"
+import removeConsole from "vite-plugin-remove-console"
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode, command }) => {
   const env = loadEnv(mode, process.cwd(), "")
   return {
-    base: env.VITE_APP_BASE_URL || "/",
+    base: env.VITE_BASE_URL || env.BASE_URL,
     plugins: [
       vue(),
 
@@ -44,7 +45,7 @@ export default defineConfig(({ mode, command }) => {
 
       // https://github.com/unplugin/unplugin-vue-components
       Components({
-        dts: "src/components.d.ts",
+        dts: "src/d.ts/components.d.ts",
         deep: true,
         dirs: ["src/components"],
         resolvers: [IconsResolver()],
@@ -54,14 +55,15 @@ export default defineConfig(({ mode, command }) => {
       AutoImport({
         imports: ["vue", "vue-router", "pinia", "vue-i18n"],
         resolvers: [VueHooksPlusResolver()],
-        dts: "src/auto-imports.d.ts",
+        include: [/\.[tj]sx?$/, /\.vue$/, /\.vue\?vue/, /\.md$/],
+        dts: "src/d.ts/auto-imports.d.ts",
       }),
 
       // https://github.com/unplugin/unplugin-icons
       Icons({
         autoInstall: true,
       }),
-
+      removeConsole(),
       command === "build" && Inspect(),
 
       // https://github.com/intlify/bundle-tools
@@ -69,12 +71,10 @@ export default defineConfig(({ mode, command }) => {
         runtimeOnly: true,
         compositionOnly: true,
         fullInstall: true,
-        include: [path.resolve(__dirname, "locales/**")],
+        include: [path.resolve(__dirname, "./locales/**")],
       }),
 
-      UnoCSS({
-        configFile: "uno.config.ts",
-      }),
+      UnoCSS({ configFile: "uno.config.ts" }),
 
       // https://github.com/pengzhanbo/vite-plugin-mock-dev-server
       MockDevServerPlugin(),
