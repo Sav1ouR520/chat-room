@@ -7,7 +7,7 @@ const switchTheme = () => {
 }
 
 const checkTheme = () => {
-  document.documentElement.classList.toggle("dark", !darkMode.value)
+  document.documentElement.classList.toggle("dark", darkMode.value)
 }
 
 export { switchTheme, checkTheme }

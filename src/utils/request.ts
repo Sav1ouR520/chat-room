@@ -29,7 +29,7 @@ request.http.interceptors.request.use(
   },
 )
 
-// 相应拦截器
+// 响应拦截器
 request.http.interceptors.response.use(
   (response: AxiosResponse) => {
     return response.status === 200 ? Promise.resolve(response.data) : Promise.reject(response)

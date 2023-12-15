@@ -1,6 +1,6 @@
 import type { ResponseData } from "@/types"
 import { request } from "@/utils"
-export type LoginRequest = {
+type LoginRequest = {
   account: string
   password: string
 }
@@ -17,4 +17,5 @@ type LoginReponse = ResponseData<{
  *
  * @returns LoginReponse - [action:boolean]
  */
-export const fetchLogin = request.post<LoginRequest, LoginReponse>("/login")
+const fetchLogin = request.post<LoginRequest, LoginReponse>("/login")
+export { fetchLogin, type LoginRequest }

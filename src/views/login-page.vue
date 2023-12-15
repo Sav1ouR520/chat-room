@@ -15,17 +15,15 @@
 </template>
 
 <script setup lang="ts">
-import type { LoginRequest } from '@/apis/user';
+import type { LoginRequest } from '@/apis';
 import { switchTheme } from '@/module';
-import { login } from '@/services/user/login';
+import { login } from '@/services';
 import { type LanguageOptions, languageList as languageListRaw } from '@/types';
+
 const { locale } = useI18n()
 const languageList = ref<LanguageOptions>(languageListRaw)
 const user = ref<LoginRequest>({ account: 'root', password: 'root' })
-// onBeforeMount(async () => {
-//     const [res] = await login(user.value)
-//     console.log(res?.action)
-// })
+
 login(user.value)
 </script>
 
