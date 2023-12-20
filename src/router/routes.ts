@@ -1,10 +1,14 @@
 import type { RouteRecordRaw } from "vue-router"
-import LoginPage from "@/views/LoginPage.vue"
 
 export const routes: RouteRecordRaw[] = [
   {
     name: "login",
     path: "/",
-    component: LoginPage,
+    component: async () => await import("@/views/LoginPage.vue"),
+  },
+  {
+    name: "register",
+    path: "/register",
+    component: async () => await import("@/views/RegisterPage.vue"),
   },
 ]

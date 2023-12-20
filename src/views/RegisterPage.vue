@@ -1,5 +1,5 @@
 <template>
-  <LoginContent />
+  <RegisterContent />
 </template>
 
 

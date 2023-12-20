@@ -5,8 +5,8 @@ login:
   password: Password
   a_placeholder: Please enter account
   p_placeholder: Please enter password
-  a_error: Account must be entered
-  p_error: Password must be entered
+  a_error_empty: Account must be entered
+  p_error_empty: Password must be entered
   n_account: Don't have an account yet?
   f_password: Forgot Password?
   l_button: Sign in

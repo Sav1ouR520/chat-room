@@ -1,7 +1,8 @@
-import "@/assets/main.css"
 import "virtual:uno.css"
 import "@unocss/reset/tailwind.css"
+import "nprogress/nprogress.css"
 import "vue-toastification/dist/index.css"
+import "@/assets/main.css"
 
 import { useRequestDevToolsPlugin } from "vue-hooks-plus"
 import { createApp } from "vue"

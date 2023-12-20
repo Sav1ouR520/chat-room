@@ -5,19 +5,16 @@
       <form @submit="onSubmit">
         <InputItem :tag="vaild.account" />
         <InputItem :tag="vaild.password">
-          <template v-slot>
+          <template v-slot:label>
             <a tabindex="-1" text-sm font-medium text-green-500 hover:text-green-400 href="#">{{ $t("login.f_password") }}
             </a>
           </template>
         </InputItem>
-        <ButtonItem :readying="readying">
-          <template v-slot>
-            <div flex justify-center items-center h-10 text-sm>
-              <span mr-2>{{ $t("login.n_account") }}</span>
-              <a ml-2 font-medium text-green-500 hover:text-green-400 href="#">{{ $t("login.r_link") }}</a>
-            </div>
-          </template>
-        </ButtonItem>
+        <ButtonItem :readying="readying" :name="$t('login.l_button')" />
+        <div flex justify-center items-center h-10 text-sm>
+          <span mr-2>{{ $t("login.n_account") }}</span>
+          <a ml-2 font-medium text-green-500 hover:text-green-400 href="/register">{{ $t("login.r_link") }}</a>
+        </div>
       </form>
     </div>
   </div>
@@ -43,22 +40,22 @@ const vaild = reactive<LoginVaild>({
 // 输入验证
 const { handleSubmit, resetForm } = useForm<LoginRequest>({
   validationSchema: yup.object({
-    account: yup.string().required(t("login.a_error")),
-    password: yup.string().required(t("login.p_error")),
+    account: yup.string().required(t("login.a_error_empty")),
+    password: yup.string().required(t("login.p_error_empty")),
   }),
 })
 
-// 登录按钮防止过频繁点击
+// 按钮防止过频繁点击
 const [readying, toggle] = useToggle()
 
 // 手动触发网络请求，并在成功后重置表单
 const { run, } = useRequest(fetchLogin, {
-  onSuccess: (data) => {
-    if (data.data.verify) {
-      toast.success("登录成功");
+  onSuccess: ({ data, message }) => {
+    if (data.verify) {
+      toast.success(message)
       resetForm()
     } else {
-      toast.error("账号不存在/密码错误")
+      toast.error(message)
     }
   },
   onFinally: () => toggle()
@@ -68,7 +65,6 @@ const { run, } = useRequest(fetchLogin, {
 // 提交请求
 const onSubmit = handleSubmit((values) => {
   toggle()
-
   run(values)
 })
 

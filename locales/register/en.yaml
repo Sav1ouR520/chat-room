@@ -1,0 +1,20 @@
+register:
+  title: register
+  introduce: Sign up your account
+  account: Account
+  password: Password
+  code: Code
+  a_placeholder: Please enter the correct email
+  p_placeholder: Please enter password
+  c_placeholder: Please enter email verification code
+  a_error_empty: Account must be entered
+  a_error_email: Not in email format
+  p_error_empty: Password must be entered
+  p_error_strength: Insufficient password strength
+  c_error_empty: Code must be entered
+  c_error_length: The length of the verification code is four digits
+  n_account: Do you already have an account?
+  c_button: Get code
+  l_button: Sign up
+  r_link: Sign in
+

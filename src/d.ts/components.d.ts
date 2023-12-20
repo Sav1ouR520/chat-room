@@ -7,11 +7,17 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    App: typeof import('./../App.vue')['default']
     ButtonItem: typeof import('./../components/FormItem/ButtonItem.vue')['default']
     ChatContext: typeof import('./../components/ChatContext.vue')['default']
     ChatNavbar: typeof import('./../components/ChatNavbar.vue')['default']
     InputItem: typeof import('./../components/FormItem/InputItem.vue')['default']
+    LayoutItem: typeof import('./../layouts/LayoutItem.vue')['default']
     LoginContent: typeof import('./../components/LoginContent.vue')['default']
+    LoginPage: typeof import('./../views/LoginPage.vue')['default']
+    Register: typeof import('./../components/register.vue')['default']
+    RegisterContent: typeof import('./../components/RegisterContent.vue')['default']
+    RegisterPage: typeof import('./../views/RegisterPage.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     ToggleDarkMode: typeof import('./../components/ToggleDarkMode.vue')['default']

@@ -6,17 +6,16 @@ type LoginRequest = {
 }
 
 type LoginReponse = ResponseData<{
-  verify: boolean
+  verify: number
 }>
 
 /**
- * 用户登录功能，返回的data含有action
- * 登录成功为true，登录失败为false
+ * 用户登录功能，根据verify值判断是否登录成功
+ * 登录成功为true，失败为false，原因查看message
  * @param account 账号
  * @param password 密码
  *
- * @returns LoginReponse - [action:boolean]
+ * @returns LoginReponse
  */
 const fetchLogin = (user: LoginRequest) => request.post<LoginRequest, LoginReponse>("/login")(user)
-// const fetchLogin = request.post<LoginRequest, LoginReponse>("/login")
-export { fetchLogin, type LoginRequest, type LoginReponse }
+export { fetchLogin, type LoginRequest }

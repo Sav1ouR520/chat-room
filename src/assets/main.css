@@ -1,5 +1,6 @@
 html,
 body,
+#layout,
 #app {
   height: 100%;
   min-height: 100vh;
@@ -22,4 +23,9 @@ body,
 :root[class="dark"] {
   ---text-color: white;
   ---bg-color: black;
+}
+
+#nprogress .bar {
+  background: rgb(62, 220, 132);
+  height: 2px;
 }

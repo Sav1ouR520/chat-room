@@ -1,9 +1,7 @@
-type ResponseData<T> = {
-  action: boolean
+type ResponseData<T = any> = {
   data: T
   message: string
-  code: number
-  timestamp: Date
+  timestamp: number
 }
 
 type RequestQuery<T extends object = object, K extends keyof T = keyof T> = {
