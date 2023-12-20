@@ -1,12 +1,9 @@
 import { defineMock } from "vite-plugin-mock-dev-server"
-
 export default defineMock({
   url: "/api/login",
   enabled: true,
   method: "POST",
-  validator: {
-    body: { account: "root", password: "root" },
-  },
+  delay: 1000,
   body: () => ({
     code: 200,
     message: "success",

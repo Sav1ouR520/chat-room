@@ -1,0 +1,78 @@
+<template>
+  <div flex h-full flex-col justify-center items-center p-10 min-h-135>
+    <div sm-w-120 w-full>
+      <h1 text-center text-2xl font-bold pb-5>{{ $t("login.introduce") }}</h1>
+      <form @submit="onSubmit">
+        <InputItem :tag="vaild.account" />
+        <InputItem :tag="vaild.password">
+          <template v-slot>
+            <a tabindex="-1" text-sm font-medium text-green-500 hover:text-green-400 href="#">{{ $t("login.f_password") }}
+            </a>
+          </template>
+        </InputItem>
+        <ButtonItem :readying="readying">
+          <template v-slot>
+            <div flex justify-center items-center h-10 text-sm>
+              <span mr-2>{{ $t("login.n_account") }}</span>
+              <a ml-2 font-medium text-green-500 hover:text-green-400 href="#">{{ $t("login.r_link") }}</a>
+            </div>
+          </template>
+        </ButtonItem>
+      </form>
+    </div>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { fetchLogin, type LoginRequest } from '@/apis';
+import type { Convert, InputAttr } from "@/types"
+import { useToast } from "vue-toastification";
+import * as yup from "yup"
+const { t } = useI18n()
+const toast = useToast();
+
+// 验证属性
+type LoginVaild = Convert<LoginRequest, InputAttr>
+
+// 设置input属性
+const vaild = reactive<LoginVaild>({
+  account: { label: t("login.account"), placeholder: t("login.a_placeholder"), name: "account", type: "text" },
+  password: { label: t("login.password"), placeholder: t("login.p_placeholder"), name: "password", type: "password" },
+})
+
+// 输入验证
+const { handleSubmit, resetForm } = useForm<LoginRequest>({
+  validationSchema: yup.object({
+    account: yup.string().required(t("login.a_error")),
+    password: yup.string().required(t("login.p_error")),
+  }),
+})
+
+// 登录按钮防止过频繁点击
+const [readying, toggle] = useToggle()
+
+// 手动触发网络请求，并在成功后重置表单
+const { run, } = useRequest(fetchLogin, {
+  onSuccess: (data) => {
+    if (data.data.verify) {
+      toast.success("登录成功");
+      resetForm()
+    } else {
+      toast.error("账号不存在/密码错误")
+    }
+  },
+  onFinally: () => toggle()
+  , manual: true
+})
+
+// 提交请求
+const onSubmit = handleSubmit((values) => {
+  toggle()
+
+  run(values)
+})
+
+
+</script>
+
+<style scoped></style>

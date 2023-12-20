@@ -1,6 +1,4 @@
-import type { Token } from "@/types"
 import { AxiosError, type AxiosResponse } from "axios"
-import { useLocalStorageState } from "vue-hooks-plus"
 import { createAxios } from "@/module/http"
 
 const request = createAxios({
@@ -13,13 +11,9 @@ const request = createAxios({
 request.http.interceptors.request.use(
   config => {
     if (config.headers) {
-      const [token] = useLocalStorageState<Token>("token")
-      if (token.value) {
-        const { accessToken, refreshToken } = token.value
-        config.headers.Authorization = "Bearer " + accessToken
-        if (config.url === "/refresh") {
-          config.headers.Authorization = "Bearer " + refreshToken
-        }
+      const refreshToken = localStorage.getItem("refreshToken")
+      if (refreshToken && config.url === "/refresh") {
+        config.headers.Authorization = "Bearer " + refreshToken
       }
     }
     return config

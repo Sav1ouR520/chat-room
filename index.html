@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html>
 
 <head>
   <meta charset="UTF-8">
@@ -8,8 +8,8 @@
   <title>ChatRoom</title>
   <script>; (function () {
       const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
-      const setting = localStorage.getItem('dark-mode-enabled')
-      if ((setting && JSON.parse(setting)) || (prefersDark && setting === null))
+      const setting = localStorage.getItem('vueuse-color-scheme') || 'auto'
+      if ((setting === 'auto' && prefersDark) || (setting === 'dark'))
         document.documentElement.classList.toggle('dark', true)
     })()</script>
 </head>

@@ -1,7 +1,7 @@
 import messages from "@intlify/unplugin-vue-i18n/messages"
 import type { App } from "vue"
 import { createI18n } from "vue-i18n"
-import { useLocalStorageState } from "vue-hooks-plus"
+import { useStorage } from "@vueuse/core"
 import { DEFAULT_LANGUAGE } from "@/types"
 import { setTitle } from "@/module"
 
@@ -17,11 +17,11 @@ const setupI18n = (app: App) => {
 }
 
 const mountI18n = () => {
-  const [language, setLanguage] = useLocalStorageState<string>("language")
+  const language = useStorage("language", DEFAULT_LANGUAGE)
   const { locale } = useI18n()
-  onMounted(() => (locale.value = language.value && locale.value !== language.value ? language.value : locale.value))
+  onMounted(() => (locale.value !== language.value ? language.value : locale.value))
   watch(locale, locale => {
-    setLanguage(locale)
+    language.value = locale
     setTitle()
   })
 }

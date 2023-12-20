@@ -48,21 +48,21 @@ export default defineConfig(({ mode, command }) => {
         dts: "src/d.ts/components.d.ts",
         deep: true,
         dirs: ["src/components"],
-        resolvers: [IconsResolver()],
+        resolvers: [IconsResolver({ prefix: "Icon" })],
       }),
 
       // https://github.com/unplugin/unplugin-auto-import
       AutoImport({
-        imports: ["vue", "vue-router", "pinia", "vue-i18n"],
+        imports: ["vue", "vue-router", "pinia", "vue-i18n", "@vueuse/core", "vee-validate"],
         resolvers: [VueHooksPlusResolver()],
         include: [/\.[tj]sx?$/, /\.vue$/, /\.vue\?vue/, /\.md$/],
         dts: "src/d.ts/auto-imports.d.ts",
       }),
 
       // https://github.com/unplugin/unplugin-icons
-      Icons({
-        autoInstall: true,
-      }),
+      Icons({ autoInstall: true }),
+
+      // https://github.com/xiaoxian521/vite-plugin-remove-console
       removeConsole(),
       command === "build" && Inspect(),
 
@@ -74,6 +74,7 @@ export default defineConfig(({ mode, command }) => {
         include: [path.resolve(__dirname, "./locales/**")],
       }),
 
+      // https://github.com/unocss/unocss
       UnoCSS({ configFile: "uno.config.ts" }),
 
       // https://github.com/pengzhanbo/vite-plugin-mock-dev-server

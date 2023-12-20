@@ -1,13 +1,14 @@
-import { useDarkMode } from "vue-hooks-plus"
-const [darkMode, setDarkMode] = useDarkMode()
 
+const isDark = useDark()
+
+const toggleDark = useToggle(isDark)
 const switchTheme = () => {
-  setDarkMode(!darkMode.value)
+  toggleDark()
   checkTheme()
 }
 
 const checkTheme = () => {
-  document.documentElement.classList.toggle("dark", darkMode.value)
+  document.documentElement.classList.toggle("dark", isDark.value)
 }
 
-export { switchTheme, checkTheme }
+export { switchTheme,isDark }

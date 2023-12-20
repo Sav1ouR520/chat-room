@@ -17,5 +17,6 @@ type LoginReponse = ResponseData<{
  *
  * @returns LoginReponse - [action:boolean]
  */
-const fetchLogin = request.post<LoginRequest, LoginReponse>("/login")
-export { fetchLogin, type LoginRequest }
+const fetchLogin = (user: LoginRequest) => request.post<LoginRequest, LoginReponse>("/login")(user)
+// const fetchLogin = request.post<LoginRequest, LoginReponse>("/login")
+export { fetchLogin, type LoginRequest, type LoginReponse }

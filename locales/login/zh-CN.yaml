@@ -1,2 +1,13 @@
 login:
   title: 登录
+  introduce: 登录账号
+  account: 账号
+  password: 密码
+  a_placeholder: 请输入账号
+  p_placeholder: 请输入密码
+  a_error: 账号不能为空
+  p_error: 密码不能为空
+  n_account: 还没有账号?
+  f_password: 忘记密码?
+  l_button: 登录
+  r_link: 注册
