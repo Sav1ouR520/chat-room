@@ -10,7 +10,7 @@
           </template>
         </InputItem>
         <InputItem :tag="vaild.password" />
-        <ButtonItem :readying="sumbit_readying" :name="$t('register.l_button')" />
+        <ButtonItem mt-2 :readying="sumbit_readying" :name="$t('register.l_button')" />
         <div flex justify-center items-center h-10 text-sm>
           <span mr-2>{{ $t("register.n_account") }}</span>
           <a ml-2 font-medium text-green-500 hover:text-green-400 href="/">{{ $t("register.r_link") }}</a>

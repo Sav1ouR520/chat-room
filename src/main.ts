@@ -17,8 +17,8 @@ const bootstrap = () => {
 
   app.use(useRequestDevToolsPlugin)
   setupStore(app)
-  setupI18n(app)
   setupRouter(app)
+  setupI18n(app)
   setupToast(app)
   app.mount("#app")
 }

@@ -10,7 +10,7 @@
             </a>
           </template>
         </InputItem>
-        <ButtonItem :readying="readying" :name="$t('login.l_button')" />
+        <ButtonItem mt-2 :readying="readying" :name="$t('login.l_button')" />
         <div flex justify-center items-center h-10 text-sm>
           <span mr-2>{{ $t("login.n_account") }}</span>
           <a ml-2 font-medium text-green-500 hover:text-green-400 href="/register">{{ $t("login.r_link") }}</a>
