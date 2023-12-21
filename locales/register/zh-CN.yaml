@@ -3,13 +3,17 @@ register:
   introduce: 注册账号
   account: 账号
   password: 密码
+  repassword: 确认密码
   code: 验证码
   a_placeholder: 请输入正确的邮箱
   p_placeholder: 要求使用大写小写字母，数字，特殊符号中任意3项
+  r_placeholder: 再输入一次密码
   c_placeholder : 请输入邮箱验证码
   a_error_empty: 账号不能为空
   a_error_email: 不是邮箱格式
   p_error_empty: 密码不能为空
+  r_error_empty: 确认密码不能为空
+  r_error_no_equal: 两次密码不一致
   p_error_strength: 密码强度不足
   c_error_empty: 验证码不为空
   c_error_length: 验证码长度为4位

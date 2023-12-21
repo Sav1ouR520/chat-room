@@ -24,6 +24,9 @@
 import { fetchLogin, type LoginRequest } from '@/apis';
 import type { Convert, InputAttr } from "@/types"
 import { useToast } from "vue-toastification";
+import { setLocale } from 'yup';
+
+
 import * as yup from "yup"
 const { t } = useI18n()
 const toast = useToast();
@@ -33,15 +36,15 @@ type LoginVaild = Convert<LoginRequest, InputAttr>
 
 // 设置input属性
 const vaild = reactive<LoginVaild>({
-  account: { label: t("login.account"), placeholder: t("login.a_placeholder"), name: "account", type: "text" },
-  password: { label: t("login.password"), placeholder: t("login.p_placeholder"), name: "password", type: "password" },
+  account: { id: "login", label: "account", placeholder: "a", name: "account", type: "text" },
+  password: { id: "login", label: "assword", placeholder: "p", name: "password", type: "password" },
 })
 
 // 输入验证
 const { handleSubmit, resetForm } = useForm<LoginRequest>({
   validationSchema: yup.object({
-    account: yup.string().required(t("login.a_error_empty")),
-    password: yup.string().required(t("login.p_error_empty")),
+    account: yup.string().required(() => t("login.a_error_empty")),
+    password: yup.string().required(() => t("login.p_error_empty")),
   }),
 })
 
@@ -67,8 +70,4 @@ const onSubmit = handleSubmit((values) => {
   toggle()
   run(values)
 })
-
-
 </script>
-
-<style scoped></style>

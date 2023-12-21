@@ -14,9 +14,6 @@ dependencies:
   '@unocss/reset':
     specifier: ^0.58.0
     version: 0.58.0
-  '@vee-validate/i18n':
-    specifier: ^4.12.3
-    version: 4.12.3
   '@vee-validate/yup':
     specifier: ^4.12.3
     version: 4.12.3(vue@3.3.13)
@@ -1724,10 +1721,6 @@ packages:
       vite: 4.5.1(@types/node@18.19.3)
     transitivePeerDependencies:
       - rollup
-
-  /@vee-validate/i18n@4.12.3:
-    resolution: {integrity: sha512-JSlarvjC4RCEIEbzHZiKOst5Hn5FrY5NR5Dzc89kNVlLOW6FS8m1Jee9+5QUT18ogkVI4PDhxysmV28RXmiE/w==, tarball: https://registry.npmmirror.com/@vee-validate/i18n/-/i18n-4.12.3.tgz}
-    dev: false
 
   /@vee-validate/yup@4.12.3(vue@3.3.13):
     resolution: {integrity: sha512-Blk+6o3+b8R9KgEHEVEd2M+EwIPCDVvVp3V6oJMU4T0upqDgP9YslyiNQECcMg4R04SDzXIm/W8cupRGlAy4kQ==, tarball: https://registry.npmmirror.com/@vee-validate/yup/-/yup-4.12.3.tgz}

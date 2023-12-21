@@ -8,5 +8,4 @@ checkTheme()
 mountI18n()
 setupUseReq()
 setupVee()
-
 </script>

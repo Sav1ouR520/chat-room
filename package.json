@@ -27,7 +27,6 @@
     "@julr/unocss-preset-forms": "^0.1.0",
     "@types/js-cookie": "^3.0.6",
     "@unocss/reset": "^0.58.0",
-    "@vee-validate/i18n": "^4.12.3",
     "@vee-validate/yup": "^4.12.3",
     "@vue-hooks-plus/use-request-plugins": "^1.8.0",
     "@vueuse/core": "^10.7.0",

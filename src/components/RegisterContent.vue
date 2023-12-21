@@ -10,6 +10,7 @@
           </template>
         </InputItem>
         <InputItem :tag="vaild.password" />
+        <InputItem :tag="vaild.repassword" />
         <ButtonItem mt-2 :readying="sumbit_readying" :name="$t('register.l_button')" />
         <div flex justify-center items-center h-10 text-sm>
           <span mr-2>{{ $t("register.n_account") }}</span>
@@ -30,22 +31,23 @@ const { t } = useI18n()
 const toast = useToast();
 const router = useRouter()
 
-// 验证属性
-type RegisterVaild = Convert<RegisterRequest, InputAttr>
-
 // 设置input属性
+type RegisterVaild = Convert<RegisterRequest & { repassword: string }, InputAttr>
 const vaild = reactive<RegisterVaild>({
-  account: { label: t("register.account"), placeholder: t("register.a_placeholder"), name: "account", type: "text" },
-  password: { label: t("register.password"), placeholder: t("register.p_placeholder"), name: "password", type: "password" },
-  code: { label: t("register.code"), placeholder: t("register.c_placeholder"), name: "code", type: "text" },
+  account: { id: "register", label: "account", placeholder: "a", name: "account", type: "text" },
+  password: { id: "register", label: "password", placeholder: "p", name: "password", type: "password" },
+  repassword: { id: "register", label: "repassword", placeholder: "r", name: "repassword", type: "password" },
+  code: { id: "register", label: "code", placeholder: "c", name: "code", type: "text" },
 })
 
 // 输入验证
-const { handleSubmit, resetForm } = useForm<RegisterRequest>({
+type RegisterForm = RegisterRequest & { repassword: string }
+const { handleSubmit, resetForm } = useForm<RegisterForm>({
   validationSchema: yup.object({
-    account: yup.string().required(t('register.a_error_empty')).matches(email_valid, t('register.a_error_email')),
-    password: yup.string().required(t('register.p_error_empty')).matches(password_valid, t('register.p_error_strength')),
-    code: yup.string().required(t('register.c_error_empty')).length(4, t('register.c_error_length'))
+    account: yup.string().required(() => t('register.a_error_empty')).matches(email_valid, () => t('register.a_error_email')),
+    password: yup.string().required(() => t('register.p_error_empty')).matches(password_valid, () => t('register.p_error_strength')),
+    repassword: yup.string().required(() => t('register.r_error_empty')).equals([yup.ref('password')], () => t('register.r_error_no_equal')),
+    code: yup.string().required(() => t('register.c_error_empty')).length(4, () => t('register.c_error_length'))
   }),
 })
 
@@ -67,9 +69,10 @@ const { run: sumbit } = useRequest(fetchRegister, {
 })
 
 // 提交请求
-const onSubmit = handleSubmit((values) => {
+const onSubmit = handleSubmit((value) => {
   sumbit_toggle()
-  sumbit(values)
+  const { account, password, code } = value
+  sumbit({ account, password, code })
 })
 
 // 发送邮箱请求
@@ -98,8 +101,4 @@ const { run: sendEmail } = useRequest(fetchSendEmail, {
     nextTime.value = data.nextTime
   }, manual: true
 })
-
-
 </script>
-
-<style scoped></style>

@@ -19,7 +19,7 @@ const setupI18n = (app: App) => {
 const mountI18n = () => {
   const language = useStorage("language", DEFAULT_LANGUAGE)
   const { locale } = useI18n()
-  onMounted(() => (locale.value !== language.value ? language.value : locale.value))
+  onMounted(() => (locale.value = locale.value !== language.value ? language.value : locale.value))
   watch(locale, locale => {
     language.value = locale
     setTitle()
