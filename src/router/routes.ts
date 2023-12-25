@@ -11,4 +11,15 @@ export const routes: RouteRecordRaw[] = [
     path: "/register",
     component: async () => await import("@/views/RegisterPage.vue"),
   },
+  {
+    name: "forge",
+    path: "/forge",
+    component: async () => await import("@/views/ForgePage.vue"),
+  },
+  {
+    name: "main",
+    path: "/main",
+    component: async () => await import("@/views/MainPage.vue"),
+    children: [{ name: "room", path: ":id", component: async () => await import("@/views/MainPage.vue") }],
+  },
 ]

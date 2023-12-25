@@ -4,6 +4,7 @@ type InputAttr = {
   placeholder: string
   name: string
   type: string
+  visible?: boolean
 }
 
 export type { InputAttr }

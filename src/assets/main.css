@@ -2,25 +2,23 @@ html,
 body,
 #app {
   height: 100%;
-  text-overflow: ellipsis;
-  white-space: nowrap;
   box-sizing: border-box;
 
   transition-property: background-color, border-color, color, fill, stroke;
   transition-timing-function: ease-in-out;
   transition-duration: 300ms;
-  background-color: var(---bg-color);
-  color: var(---text-color);
+  background-color: var(--bg-color);
+  color: var(--text-color);
 }
 
 :root {
-  ---bg-color: white;
-  ---text-color: black;
+  --bg-color: white;
+  --text-color: black;
 }
 
 .dark {
-  ---text-color: white;
-  ---bg-color: black;
+  --text-color: white;
+  --bg-color: black;
 }
 
 #nprogress .bar {

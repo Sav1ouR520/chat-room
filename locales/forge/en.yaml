@@ -1,0 +1,24 @@
+forge:
+  title: Forgot Password
+  introduce: Forgot Password
+  account: Account
+  password: New Password
+  repassword:  rePassword
+  code: Code
+  a_placeholder: Please enter the registered email
+  p_placeholder: Please enter New password
+  c_placeholder: Please enter email verification code
+  r_placeholder: Confirm Password
+  a_error_empty: Account must be entered
+  a_error_email: Not in email format
+  p_error_empty: Password must be entered
+  r_error_empty: RePassword must be entered
+  p_error_strength: Insufficient password strength
+  r_error_no_equal: The password do not match
+  c_error_empty: Code must be entered
+  c_error_length: The length of the verification code is four digits
+  n_account: Remember?
+  c_button: Get code
+  l_button: Change Password
+  r_link: Sign in
+

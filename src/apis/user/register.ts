@@ -15,5 +15,5 @@ type RegisterReponse = ResponseData<{
  * @param user
  * @returns RegisterReponse
  */
-const fetchRegister = (user: RegisterRequest) => request.post<RegisterRequest, RegisterReponse>("register")(user)
+const fetchRegister = (user: RegisterRequest) => request.post<RegisterRequest, RegisterReponse>("/register")(user)
 export { fetchRegister, type RegisterRequest }

@@ -1,19 +1,18 @@
 <template>
-  <div absolute bottom-4 left-4 z-2023 ref="box">
-    <div flex items-center h-15 hover:bg-gray-100 rounded-xl>
-      <div flex justify-center items-center w-full hover:animate-spin transform-gpu h-full
-        :class="show ? 'text-black' : 'text-white'" ref="icon">
-        <Icon-tdesign:setting-1 text-8 mx-2 />
-      </div>
-      <div flex items-center v-show="show" mr-2>
-        <ToggleDarkMode mr-2 />
-        <ToggleLanguage />
-      </div>
+  <div flex items-center h-15 hover:bg-gray-100 rounded-xl ref="box">
+    <div flex justify-center items-center w-full hover:animate-spin transform-gpu h-full
+      :class="!isDark || show ? 'text-black' : 'text-white'" ref="icon">
+      <Icon-tdesign:setting-1 text-8 mx-2 />
+    </div>
+    <div flex items-center v-show="show" mr-2 :class="show ? 'animated animated-fade-in' : ''">
+      <DarkModeItem mr-2 />
+      <LanguageItem />
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
+import { isDark } from '@/module';
 const icon = ref(null)
 const box = ref(null)
 const { isOutside: iconIsOutSide } = useMouseInElement(icon)

@@ -6,7 +6,8 @@
         <InputItem :tag="vaild.account" />
         <InputItem :tag="vaild.password">
           <template v-slot:label>
-            <a tabindex="-1" text-sm font-medium text-green-500 hover:text-green-400 href="#">{{ $t("login.f_password") }}
+            <a tabindex="-1" text-sm font-medium text-green-500 hover:text-green-400 href="/forge">{{
+              $t("login.f_password") }}
             </a>
           </template>
         </InputItem>
@@ -24,8 +25,6 @@
 import { fetchLogin, type LoginRequest } from '@/apis';
 import type { Convert, InputAttr } from "@/types"
 import { useToast } from "vue-toastification";
-import { setLocale } from 'yup';
-
 
 import * as yup from "yup"
 const { t } = useI18n()
@@ -37,7 +36,7 @@ type LoginVaild = Convert<LoginRequest, InputAttr>
 // 设置input属性
 const vaild = reactive<LoginVaild>({
   account: { id: "login", label: "account", placeholder: "a", name: "account", type: "text" },
-  password: { id: "login", label: "assword", placeholder: "p", name: "password", type: "password" },
+  password: { id: "login", label: "password", placeholder: "p", name: "password", type: "password" },
 })
 
 // 输入验证
