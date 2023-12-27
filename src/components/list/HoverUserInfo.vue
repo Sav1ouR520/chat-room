@@ -1,5 +1,5 @@
 <template>
-  <div absolute top--24 left-0 px-8 w-full>
+  <div absolute top--24 left-0 mx-8 w-75>
     <div dark:bg-zinc-800 bg-gray-200 rounded p-2>
       <div flex items-center h-10>
         <span mr-2>{{ $t('main.account') }}</span>

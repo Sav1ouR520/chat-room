@@ -4,11 +4,13 @@ import { faker } from "@faker-js/faker"
 
 const generate = () => ({
   messageId: faker.string.uuid(),
-  userId: faker.string.uuid(),
-  userName: faker.internet.userName(),
-  userIcon: faker.image.avatar(),
+  memberId: faker.string.uuid(),
+  memberName: faker.internet.userName(),
   message: faker.lorem.sentence(),
   sendTime: dayjs(faker.date.past()).format("HH:mm a"),
+  user: {
+    userIcon: faker.image.avatar(),
+  },
 })
 
 export const message = defineMockData("message", Array.from({ length: 40 }, generate))

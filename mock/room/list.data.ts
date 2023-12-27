@@ -6,9 +6,11 @@ const generate = () => ({
   roomId: faker.string.uuid(),
   roomName: faker.word.noun(),
   roomIcon: faker.image.avatar(),
-  userName: faker.internet.userName(),
-  message: faker.lorem.sentence(),
-  sendTime: dayjs(faker.date.past()).format("HH:mm a"),
+  lastMessage: {
+    memberName: faker.internet.userName(),
+    message: faker.lorem.sentence(),
+    sendTime: dayjs(faker.date.past()).format("HH:mm a"),
+  },
 })
 
-export const list = defineMockData("list", Array.from({ length: 30 }, generate))
+export const list = defineMockData("chat-list", Array.from({ length: 30 }, generate))

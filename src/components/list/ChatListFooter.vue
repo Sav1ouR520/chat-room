@@ -38,7 +38,7 @@ const { isOutside: infoIsOutSide } = useMouseInElement(info)
 const { isOutside: boxIsOutSide } = useMouseInElement(box)
 const show = ref(false)
 watch(infoIsOutSide, () => show.value = !infoIsOutSide.value)
-watch(boxIsOutSide, () => show.value = !boxIsOutSide.value ? !boxIsOutSide.value : show.value)
+watch(boxIsOutSide, () => show.value = boxIsOutSide.value && infoIsOutSide.value ? false : true)
 
 // 切换修改用户名/密码
 const [value, toggle] = useToggle()

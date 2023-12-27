@@ -1,7 +1,7 @@
 <template>
   <div flex justify-center items-center p-2 rounded dark:box-shadow-black box-shadow-white>
-    <div relative flex justify-center items-center h-8 w-8 rounded dark:border-slate-700>
-      <div text-3 font-bold ref="box">{{ $t('main.list_header_title') }}</div>
+    <div relative flex justify-center items-center h-8 w-8 rounded dark:border-slate-700 ref="box">
+      <div text-3 font-bold>{{ $t('main.list_header_title') }}</div>
       <ChatSetting ref="setting" v-if="show" />
     </div>
     <div h-8 flex-grow mx-2>
@@ -57,5 +57,5 @@ const { isOutside: settingIsOutSide } = useMouseInElement(setting)
 const { isOutside: boxIsOutSide } = useMouseInElement(box)
 const show = ref(false)
 watch(settingIsOutSide, () => show.value = !settingIsOutSide.value)
-watch(boxIsOutSide, () => show.value = !boxIsOutSide.value ? !boxIsOutSide.value : show.value)
+watch(boxIsOutSide, () => show.value = boxIsOutSide.value && settingIsOutSide.value ? false : true)
 </script>

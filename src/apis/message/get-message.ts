@@ -4,11 +4,13 @@ type GetMessageRequest = { roomId: string }
 
 type ChatMessage = {
   messageId: string
-  userId: string
-  userName: string
-  userIcon: string
+  memberId: string
+  memberName: string
   message: string
   sendTime: string
+  user: {
+    userIcon: string
+  }
 }[]
 
 type GetMessageListReponse = ResponseData<ChatMessage>

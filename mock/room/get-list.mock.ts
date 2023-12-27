@@ -3,7 +3,7 @@ import { ResponseData } from "../utils"
 import { list } from "./list.data"
 
 export default defineMock({
-  url: "/api/list",
+  url: "/api/room",
   enabled: true,
   method: "GET",
   body: ({ query }): ResponseData => {

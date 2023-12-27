@@ -9,17 +9,17 @@
       </div>
       <div flex items-end justify-between text-gray-500 h-6 text-2.5>
         <div truncate w-40>
-          <span dark:text-gray-300>{{ userName + ": " }}</span>
-          <span>{{ message }}</span>
+          <span dark:text-gray-300>{{ lastMessage.memberName + ": " }}</span>
+          <span>{{ lastMessage.message }}</span>
         </div>
-        <span>{{ sendTime }} </span>
+        <span>{{ lastMessage.sendTime }} </span>
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-defineProps<{ roomId: string, roomIcon: string, roomName: string, message: string, userName: string, sendTime: string }>()
+defineProps<{ roomId: string, roomName: string, roomIcon: string, lastMessage: { memberName: string, message: string, sendTime: string }; }>()
 </script>
 
 

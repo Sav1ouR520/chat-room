@@ -18,11 +18,10 @@
 import { fetchGetList, type ChatList } from '@/apis';
 import { VueDraggable } from 'vue-draggable-plus'
 
-//  获取列表
+// 获取聊天室列表
 const list = ref<ChatList>([])
 const { run } = useRequest((value?: string) => fetchGetList({ roomName: value }), { onSuccess: ({ data }) => list.value = data })
 const getValue = (value: string) => value !== "" ? run(value) : run()
-
 </script>
 
 <style scoped>
