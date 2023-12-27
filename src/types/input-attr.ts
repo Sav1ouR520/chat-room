@@ -1,9 +1,8 @@
 type InputAttr = {
   id: string
-  label: string
-  placeholder: string
   name: string
   type: string
+  position?: "top" | "left"
   visible?: boolean
 }
 

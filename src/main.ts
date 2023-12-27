@@ -2,6 +2,7 @@ import "virtual:uno.css"
 import "@unocss/reset/tailwind.css"
 import "nprogress/nprogress.css"
 import "vue-toastification/dist/index.css"
+import "vue-cropper/dist/index.css"
 import "@/assets/main.css"
 
 import { useRequestDevToolsPlugin } from "vue-hooks-plus"
@@ -14,7 +15,6 @@ import { setupI18n, setupToast } from "@/module"
 
 const bootstrap = () => {
   const app = createApp(App)
-
   app.use(useRequestDevToolsPlugin)
   setupStore(app)
   setupRouter(app)

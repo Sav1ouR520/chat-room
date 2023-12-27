@@ -1,5 +1,6 @@
 import type { ResponseData } from "@/types"
 import { request } from "@/utils"
+type ChatListRequest = { roomName?: string }
 
 type ChatList = {
   roomId: string
@@ -7,7 +8,7 @@ type ChatList = {
   roomIcon: string
   userName: string
   message: string
-  time: Date
+  sendTime: string
 }[]
 
 type GetListReponse = ResponseData<ChatList>
@@ -15,5 +16,5 @@ type GetListReponse = ResponseData<ChatList>
  * 请求列表数据，返回所有列表和最新的一条聊天记录
  * @returns GetListReponse
  */
-const fetchGetList = () => request.get<never, GetListReponse>("/list")()
+const fetchGetList = (room?: ChatListRequest) => request.get<ChatListRequest, GetListReponse>("/list")(room)
 export { fetchGetList, type ChatList }

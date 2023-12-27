@@ -10,4 +10,3 @@
 import { switchTheme, isDark } from '@/module';
 </script>
 
-<style></style>

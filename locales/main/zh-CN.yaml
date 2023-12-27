@@ -1,2 +1,52 @@
 main:
   title: 主页
+  search_placeholder: 输入聊天室名筛选
+  chat_placeholder: 输入消息来聊天吧
+  creation_diglog_title: 新建聊天室
+  invitation_diglog_title: 加入聊天室
+
+  invitation: 邀请码
+  creation_name: 名字
+  creation_icon: 图像
+
+  invitation_placeholder: 输入邀请码加入聊天室
+  invitation_empty: 邀请码不能为空
+  invitation_button: 加入聊天室
+
+  creation_name_placeholder: 输入聊天室名字
+  creation_name_empty: 聊天室的名字不能为空
+
+  creation_icon_hover: 上传图片
+  creation_icon_leave: 松开上传
+  creation_icon_empty: 图像不能为空
+  creation_button: 创建聊天室
+  switch_button: 切换
+
+  account: 用户账号
+  register_time: 注册时间
+
+  list_header_title: Chat
+  user_diglog_title: 用户信息
+
+  user_icon: 头像
+  userName: 用户名
+  password: 旧密码
+  new_password: 新密码
+
+  userName_placeholder: 请输入用户名
+  password_placeholder: 请输入旧密码
+  new_password_placeholder: 请输入新密码
+
+  user_icon_hover: 上传图片
+  user_icon_leave: 松开上传
+
+  userName_error_empty: 用户名不能为空
+  password_error_empty: 旧密码不能为空
+  new_password_error_empty: 新密码不能为空
+
+  userName_error_length: 用户名不能超过20位
+  new_password_error_strength: 密码强度不足
+
+  modify_userName_title: 修改用户名
+  modify_password_title: 修改密码
+  submit_button: 修改

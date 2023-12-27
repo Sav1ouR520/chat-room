@@ -1,8 +1,6 @@
 <template>
   <div flex h-10>
-    <div w-10 border-2 border-blue-700 rounded-xl mr-4> </div>
-    <div flex-grow>
-      <input type="text" w-full rounded-xl bg-inherit border-blue-700 border-2>
-    </div>
+    <input type="text" flex-grow w-full rounded bg-inherit border-3 border-green-500 focus:border-green-500 mr-4>
+    <ButtonItem :name="'enter'" />
   </div>
 </template>

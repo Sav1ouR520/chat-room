@@ -4,6 +4,8 @@ import { request } from "@/utils"
 type UserInfo = {
   userIcon: string
   userName: string
+  account: string
+  registerTime: Date
 }
 
 type GetUserReponse = ResponseData<UserInfo>

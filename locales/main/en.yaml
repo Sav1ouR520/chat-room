@@ -1,2 +1,52 @@
 main:
   title: Main
+  search_placeholder: Enter the chat room name to filter
+  chat_placeholder: Type in a message to chat
+  creation_diglog_title: Create a chat room
+  invitation_diglog_title: Join a chat room
+
+  invitation: Invitation Code
+  creation_name: Name
+  creation_icon: Icon
+
+  invitation_placeholder: Enter the Invitation Code to join chat room
+  invitation_empty: Invitation Code must be entered
+  invitation_button: Join the Chat Room
+
+  creation_name_placeholder: Enter the chat room name
+  creation_name_empty: The chat room name can't be empty
+
+  creation_icon_hover: Upload icon
+  creation_icon_leave: Release to upload
+  creation_icon_empty: The chat room icon can't be empty
+  creation_button: Create a chat room
+  switch_button: Switch
+
+  account: Account/Email
+  register_time: Reigster Time
+
+  list_header_title: Chat
+  user_diglog_title: User Information
+
+  user_icon: UserIcon
+  userName: UserName
+  password: Password
+  new_password: New Password
+
+  userName_placeholder: Please enter the user name
+  password_placeholder: Please enter your old password
+  new_password_placeholder: Please enter a new password
+
+  user_icon_hover: Upload icon
+  user_icon_leave: Release to upload
+
+  userName_error_empty: The user name can't be empty
+  password_error_empty: The old password can't be empty
+  new_password_error_empty: The new password cannot be empty
+
+  userName_error_length: The user name cannot exceed 20 characters
+  new_password_error_strength: Insufficient password strength
+
+  modify_userName_title: Modify UserName
+  modify_password_title: Modify Password
+  submit_button: Sumbit

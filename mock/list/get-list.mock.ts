@@ -6,7 +6,12 @@ export default defineMock({
   url: "/api/list",
   enabled: true,
   method: "GET",
-  body: (): ResponseData => {
-    return { message: "获取成功", data: list.value, timestamp: Date.now() }
+  body: ({ query }): ResponseData => {
+    const [GetList] = list
+    let data = list.value
+    if (query["roomName"]) {
+      data = GetList().filter(item => item.roomName.includes(query["roomName"]))
+    }
+    return { message: "获取成功", data, timestamp: Date.now() }
   },
 })

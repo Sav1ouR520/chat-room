@@ -1,24 +1,31 @@
 <template>
-  <div flex flex-col h-25>
-    <div flex justify-between>
-      <label pb-2 font-medium :for=tag.name>{{ $t(tag.id + '.' + tag.label) }}</label>
-      <slot name="label"></slot>
-    </div>
-    <div flex relative items-center>
-      <Field h-10 w-full rounded-md focus:ring-2 focus:ring-green-500 text-black :name=tag.name :id=tag.name
-        :placeholder="$t(tag.id + '.' + tag.placeholder + '_placeholder')" :type="visible ? 'text' : tag.type" />
-      <div absolute right-4 cursor-pointer @click="toggle()">
-        <Icon-ant-design:eye-outlined text-5 text-gray v-if="tag.visible" />
+  <div flex flex-col>
+    <div flex :class="position === 'left' ? '' : 'flex-col'">
+      <div flex justify-between items-center pb-1 mr-2 :class="position === 'left' ? ' mb-8' : ''">
+        <label font-medium :for=name>{{ $t(id + '.' + name) }}</label>
+        <slot name="label"></slot>
       </div>
-      <slot name="input"></slot>
+      <div flex flex-col flex-grow relative>
+        <div flex>
+          <Field h-10 flex-grow border-2 border-gray-200 rounded-md text-black :type="visible && value ? 'text' : type"
+            :name=name :id=name :placeholder="$t(`${id}.${name}_placeholder`)" />
+          <div absolute top-2 right-2 cursor-pointer text-5 text-gray @click="toggle()" v-if="visible">
+            <Icon-ant-design:eye-outlined v-if="value" /> <Icon-ant-design:eye-invisible-filled v-else />
+          </div>
+          <slot name="input"></slot>
+        </div>
+        <div h-8>
+          <ErrorMessage text-red-500 text-sm :name="name" />
+        </div>
+      </div>
     </div>
-    <ErrorMessage text-red-500 text-sm :name="tag.name" />
+
   </div>
 </template>
 
 <script lang="ts" setup>
 import type { InputAttr } from '@/types';
 import { Field, ErrorMessage } from 'vee-validate';
-defineProps<{ tag: InputAttr }>()
-const [visible, toggle] = useToggle()
+withDefaults(defineProps<InputAttr>(), { position: 'top' })
+const [value, toggle] = useToggle()
 </script>

@@ -16,10 +16,10 @@ import { fetchGetRoomInfo, type Room } from '@/apis';
 const route = useRoute()
 const roomId = ref(route.params['id'] as string)
 const room = ref<Room>()
+const { run } = useRequest(fetchGetRoomInfo, { onSuccess: ({ data }) => room.value = data, manual: true })
 watch(route, () => {
   const id = route.params['id'] as string
   roomId.value = id !== roomId.value ? id : roomId.value
+  if (roomId.value !== "") run(roomId.value)
 })
-if (roomId.value) useRequest(fetchGetRoomInfo(roomId.value), { onSuccess: ({ data }) => room.value = data })
-
 </script>

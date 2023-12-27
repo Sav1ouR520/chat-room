@@ -8,7 +8,7 @@ const generate = () => ({
   userName: faker.internet.userName(),
   userIcon: faker.image.avatar(),
   message: faker.lorem.sentence(),
-  time: dayjs(faker.date.past()).format("HH:mm a"),
+  sendTime: dayjs(faker.date.past()).format("HH:mm a"),
 })
 
 export const message = defineMockData("message", Array.from({ length: 40 }, generate))

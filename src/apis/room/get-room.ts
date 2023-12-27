@@ -16,5 +16,5 @@ type GetRoomInfoReponse = ResponseData<Room>
  * @param roomId 聊天室ID
  * @returns GetRoomInfoReponse
  */
-const fetchGetRoomInfo = (roomId: string) => request.get<GetRoomRequest, GetRoomInfoReponse>(`/room/${roomId}`)
+const fetchGetRoomInfo = (roomId: string) => request.get<GetRoomRequest, GetRoomInfoReponse>(`/room/${roomId}`)()
 export { fetchGetRoomInfo, type Room }

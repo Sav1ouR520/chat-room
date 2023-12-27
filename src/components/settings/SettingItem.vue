@@ -13,8 +13,10 @@
 
 <script lang="ts" setup>
 import { isDark } from '@/module';
-const icon = ref(null)
-const box = ref(null)
+
+// 浮动的颜色/主题切换显示
+const icon = ref()
+const box = ref()
 const { isOutside: iconIsOutSide } = useMouseInElement(icon)
 const { isOutside: boxIsOutSide } = useMouseInElement(box)
 const show = ref(false)

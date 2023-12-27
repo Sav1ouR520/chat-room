@@ -1,6 +1,6 @@
 import type { ResponseData } from "@/types"
 import { request } from "@/utils"
-type GetMessageRequest = string
+type GetMessageRequest = { roomId: string }
 
 type ChatMessage = {
   messageId: string
@@ -8,7 +8,7 @@ type ChatMessage = {
   userName: string
   userIcon: string
   message: string
-  time: Date
+  sendTime: string
 }[]
 
 type GetMessageListReponse = ResponseData<ChatMessage>
@@ -17,6 +17,6 @@ type GetMessageListReponse = ResponseData<ChatMessage>
  * @param roomId 聊天室的ID
  * @returns GetMessageListReponse
  */
-const fetchGetMessage = (roomId: string) => request.get<GetMessageRequest, GetMessageListReponse>(`/message/${roomId}`)
+const fetchGetMessage = (room: GetMessageRequest) => request.get<GetMessageRequest, GetMessageListReponse>(`/message`)(room)
 
 export { fetchGetMessage, type ChatMessage }

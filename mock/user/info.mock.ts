@@ -11,6 +11,8 @@ export default defineMock({
     data: {
       userIcon: user.value[0].userIcon,
       userName: user.value[0].userName,
+      account: user.value[0].account,
+      registerTime: user.value[0].registerTime,
     },
     timestamp: Date.now(),
   }),
