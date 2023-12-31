@@ -1,20 +1,18 @@
-import type { ResponseData } from "@/types"
+import type { VerifyReponse } from "@/types"
 import { request } from "@/utils"
 type CreateRoomRequest = {
   roomIcon: Blob
   roomName: string
 }
 
-type CreateRoomReponse = ResponseData<{
-  verify: boolean
-}>
 /**
  * 创建聊天室
- * @param CreateRoomRequest
- * @returns CreateRoomReponse
+ * @param room 参数为图片和房间名
+ *
+ * @returns VerifyReponse
  */
 const fetchCreateRoom = (room: CreateRoomRequest) =>
-  request.post<CreateRoomRequest, CreateRoomReponse>(`/room`)(room, {
+  request.post<CreateRoomRequest, VerifyReponse>(`/room`)(room, {
     headers: {
       "Content-Type": "`multipart/form-data",
     },

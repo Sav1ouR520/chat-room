@@ -1,4 +1,4 @@
-import type { ResponseData } from "@/types"
+import type { VerifyReponse } from "@/types"
 import { request } from "@/utils"
 type ForgeRequest = {
   account: string
@@ -6,15 +6,12 @@ type ForgeRequest = {
   code: string
 }
 
-type ForgeReponse = ResponseData<{
-  verify: boolean
-}>
-
 /**
  * 忘记密码功能，根据verify值判断是否注册成功
  * 修改成功成功为true，失败为false，原因查看message
  * @param user
- * @returns ForgeReponse
+ *
+ * @returns VerifyReponse
  */
-const fetchForge = (user: ForgeRequest) => request.post<ForgeRequest, ForgeReponse>("/forge")(user)
+const fetchForge = (user: ForgeRequest) => request.post<ForgeRequest, VerifyReponse>("/forge")(user)
 export { fetchForge, type ForgeRequest }

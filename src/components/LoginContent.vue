@@ -48,22 +48,10 @@ const [readying, toggle] = useToggle()
 
 // 手动触发网络请求，并在成功后重置表单
 const { run } = useRequest(fetchLogin, {
-  onSuccess: ({ data, message }) => {
-    if (data.verify) {
-      toast.success(message)
-      resetForm()
-      router.push('/main')
-    } else {
-      toast.error(message)
-    }
-  },
-  onFinally: () => toggle()
-  , manual: true
+  onSuccess: ({ data, message }) => data.verify ? (toast.success(message), resetForm(), router.push('/main')) : toast.error(message),
+  onFinally: () => toggle(), manual: true
 })
 
 // 提交请求
-const onSubmit = handleSubmit((values) => {
-  toggle()
-  run(values)
-})
+const onSubmit = handleSubmit((values) => (toggle(), run(values)))
 </script>

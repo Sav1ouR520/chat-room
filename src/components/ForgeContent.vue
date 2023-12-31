@@ -50,23 +50,12 @@ const [sumbit_readying, sumbit_toggle] = useToggle()
 
 // 手动触发网络请求，并在成功后重置表单
 const { run: sumbit } = useRequest(fetchForge, {
-  onSuccess: ({ data, message }) => {
-    if (data.verify) {
-      toast.success(message);
-      resetForm()
-      router.push('/')
-    } else {
-      toast.error(message)
-    }
-  },
+  onSuccess: ({ data, message }) => data.verify ? (toast.success(message), resetForm(), router.push('/')) : toast.error(message),
   onFinally: () => sumbit_toggle(), manual: true
 })
 
 // 提交请求
-const onSubmit = handleSubmit((value) => {
-  sumbit_toggle()
-  sumbit(value)
-})
+const onSubmit = handleSubmit((value) => (sumbit_toggle(), sumbit(value)))
 
 // 发送邮箱请求
 const sendEmailButton = ref()
@@ -87,23 +76,15 @@ const setButton = () => {
 const tick = ref(getTick())
 
 // 计时，防止重复发邮箱请求
-const { resume, isActive, pause } = useIntervalFn(() => {
-  tick.value = getTick()
-  setButton()
-}, 1000)
+const { resume, isActive, pause } = useIntervalFn(() => (tick.value = getTick(), setButton()), 1000)
 
 // 默认开启检测
 setButton()
 
 // 发送邮箱请求
 const { run: sendEmail } = useRequest(fetchSendEmail, {
-  onBefore: () => {
-    nextTime.value = Date.now() + 60 * 1000
-    resume()
-  },
-  onSuccess: ({ message, data }) => {
-    toast.success(message)
-    nextTime.value = data.nextTime
-  }, manual: true
+  onBefore: () => (nextTime.value = Date.now() + 60 * 1000, resume()),
+  onSuccess: ({ message, data }) => (toast.success(message), nextTime.value = data.nextTime),
+  manual: true
 })
 </script>

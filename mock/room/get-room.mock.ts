@@ -1,7 +1,6 @@
 import { defineMock } from "vite-plugin-mock-dev-server"
 import { ResponseData } from "../utils"
-import { room } from "./room.data"
-import { list } from "./list.data"
+import { room, list } from "./room.data"
 
 export default defineMock({
   url: "/api/room/:id",

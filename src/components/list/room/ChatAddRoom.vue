@@ -21,11 +21,14 @@ import vueCropper from '@/module/vue-cropper'
 import { fetchCreateRoom, } from '@/apis';
 import { type InputAttr, type UploadAttr } from '@/types';
 import { useToast } from 'vue-toastification';
+import type UploadItemVue from '../../form/UploadItem.vue';
 
 import * as yup from "yup"
-import type UploadItemVue from '../form/UploadItem.vue';
 const { t } = useI18n()
 const toast = useToast();
+
+// 获取全局room的激活弹窗
+const activeRoom = inject<Ref<boolean>>('activeRoom')
 
 // 设置input属性
 const room: { roomName: InputAttr; roomIcon: UploadAttr } = {
@@ -43,19 +46,12 @@ const [readying, toggle] = useToggle()
 
 // 手动触发网络请求，并在成功后重置表单
 const { run } = useRequest(fetchCreateRoom, {
-  onSuccess: ({ data, message }) => {
-    if (data.verify) {
-      toast.success(message)
-      resetForm()
-      option.img = ""
-      option.canMoveBox = true
-      upload.value?.clear()
-      useTimeoutFn(() => emit('close', 'inside'), 1000)
-    } else {
-      toast.error(message)
-    }
-  },
-  onFinally: () => toggle()
+  onSuccess: ({ data, message }) =>
+    data.verify ? (
+      toast.success(message), emit('close', 'inside'), activeRoom!.value = false,
+      resetForm(), option.img = "", option.canMoveBox = true, upload.value?.clear()
+    ) : toast.error(message)
+  , onFinally: () => toggle()
   , manual: true
 })
 
@@ -65,9 +61,7 @@ const onSubmit = handleSubmit(({ creation_name: roomName }, actions) => {
   if (option.img == "") {
     actions.setErrors({ creation_icon: t("main.creation_icon_empty") })
   } else {
-    toggle()
-    option.canMoveBox = false
-    cropper.value.getCropBlob((roomIcon: Blob) => run({ roomName, roomIcon }))
+    (toggle(), option.canMoveBox = false, cropper.value.getCropBlob((roomIcon: Blob) => run({ roomName, roomIcon })))
   }
 })
 

@@ -28,7 +28,7 @@ main:
   list_header_title: Chat
   user_diglog_title: User Information
 
-  user_icon: UserIcon
+  userIcon: UserIcon
   userName: UserName
   password: Password
   new_password: New Password
@@ -37,16 +37,32 @@ main:
   password_placeholder: Please enter your old password
   new_password_placeholder: Please enter a new password
 
-  user_icon_hover: Upload icon
-  user_icon_leave: Release to upload
+  userIcon_hover: Upload icon
+  userIcon_leave: Release to upload
 
   userName_error_empty: The user name can't be empty
   password_error_empty: The old password can't be empty
-  new_password_error_empty: The new password cannot be empty
+  new_password_error_empty: The new password can't  be empty
 
-  userName_error_length: The user name cannot exceed 20 characters
+  userName_error_length: The user name can't exceed 20 characters
   new_password_error_strength: Insufficient password strength
 
   modify_userName_title: Modify UserName
   modify_password_title: Modify Password
   submit_button: Sumbit
+
+  member: Chat Room Member
+
+  room_diglog_title: Chat Room Information
+
+  roomName: Room Name
+  room_owner: Room Owner
+
+  roomName_error_empty: The room name can't  be empty
+  roomName_error_length: The room name can't  exceed 20 characters
+  roomName_placeholder: Please enter the room name
+
+  modify_room_title: Modify Chat Room
+  roomIcon: RoomIcon
+  roomIcon_hover: Upload icon
+  roomIcon_leave: Release to upload

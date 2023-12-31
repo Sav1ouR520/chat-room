@@ -8,9 +8,6 @@ dependencies:
   '@julr/unocss-preset-forms':
     specifier: ^0.1.0
     version: 0.1.0(unocss@0.58.0)
-  '@types/js-cookie':
-    specifier: ^3.0.6
-    version: 3.0.6
   '@unocss/reset':
     specifier: ^0.58.0
     version: 0.58.0
@@ -44,6 +41,9 @@ dependencies:
   pinia-plugin-persistedstate:
     specifier: ^3.2.1
     version: 3.2.1(pinia@2.1.7)
+  qs:
+    specifier: ^6.11.2
+    version: 6.11.2
   vee-validate:
     specifier: ^4.12.3
     version: 4.12.3(vue@3.3.13)
@@ -94,6 +94,9 @@ devDependencies:
   '@tsconfig/node18':
     specifier: ^18.2.2
     version: 18.2.2
+  '@types/js-cookie':
+    specifier: ^3.0.6
+    version: 3.0.6
   '@types/lodash':
     specifier: ^4.14.202
     version: 4.14.202

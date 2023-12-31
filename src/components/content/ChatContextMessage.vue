@@ -9,8 +9,16 @@
 <script lang="ts" setup>
 import { fetchGetMessage, type ChatMessage } from '@/apis';
 const list = ref<ChatMessage>([])
-const props = defineProps<{ roomId: string }>()
-useRequest(() => fetchGetMessage({ roomId: props.roomId }), { onSuccess: ({ data }) => list.value = data })
+
+// 获取聊天室Id
+const route = useRoute()
+const roomId = ref(route.params['id'] as string)
+
+// 监听是否切换房间 如果切换则刷新聊天室
+watch(route, () => (roomId.value = route.params['id'] as string, run()))
+
+// 请求聊天室消息
+const { run } = useRequest(() => fetchGetMessage({ roomId: roomId.value }), { onSuccess: ({ data }) => list.value = data })
 </script>
 
 <style scoped>

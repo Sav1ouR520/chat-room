@@ -15,16 +15,13 @@
 import { isDark } from '@/module';
 
 // 浮动的颜色/主题切换显示
-const icon = ref()
-const box = ref()
+const [icon, box] = [ref(), ref()]
 const { isOutside: iconIsOutSide } = useMouseInElement(icon)
 const { isOutside: boxIsOutSide } = useMouseInElement(box)
 const show = ref(false)
-watch(iconIsOutSide, () => {
-  if (!iconIsOutSide.value) show.value = true
-})
+watch(iconIsOutSide, () => !iconIsOutSide.value && (show.value = true))
 watch(boxIsOutSide, () => {
-  if (!iconIsOutSide.value) show.value = true
-  if (boxIsOutSide.value && iconIsOutSide.value) show.value = false
+  !iconIsOutSide.value && (show.value = true)
+  boxIsOutSide.value && iconIsOutSide.value && (show.value = false)
 })
 </script>

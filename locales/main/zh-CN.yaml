@@ -28,7 +28,7 @@ main:
   list_header_title: Chat
   user_diglog_title: 用户信息
 
-  user_icon: 头像
+  userIcon: 头像
   userName: 用户名
   password: 旧密码
   new_password: 新密码
@@ -37,8 +37,8 @@ main:
   password_placeholder: 请输入旧密码
   new_password_placeholder: 请输入新密码
 
-  user_icon_hover: 上传图片
-  user_icon_leave: 松开上传
+  userIcon_hover: 上传图片
+  userIcon_leave: 松开上传
 
   userName_error_empty: 用户名不能为空
   password_error_empty: 旧密码不能为空
@@ -50,3 +50,19 @@ main:
   modify_userName_title: 修改用户名
   modify_password_title: 修改密码
   submit_button: 修改
+
+  member: 聊天室成员
+
+  room_diglog_title: 聊天室信息
+
+  roomName: 聊天室名
+  room_owner: 聊天室主
+
+  roomName_error_empty: 聊天室名不能为空
+  roomName_error_length: 聊天室名不能超过20位
+  roomName_placeholder: 请输入聊天室名
+
+  modify_room_title: 聊天室修改
+  roomIcon: 聊天室图像
+  roomIcon_hover: 上传图片
+  roomIcon_leave: 松开上传

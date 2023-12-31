@@ -1,6 +1,6 @@
 import { defineMock } from "vite-plugin-mock-dev-server"
 import { ResponseData } from "../utils"
-import { list } from "./list.data"
+import { list } from "./room.data"
 
 export default defineMock({
   url: "/api/room",
@@ -8,10 +8,7 @@ export default defineMock({
   method: "GET",
   body: ({ query }): ResponseData => {
     const [GetList] = list
-    let data = list.value
-    if (query["roomName"]) {
-      data = GetList().filter(item => item.roomName.includes(query["roomName"]))
-    }
+    const data = query["roomName"] ? GetList().filter(item => item.roomName.includes(query["roomName"])) : list.value
     return { message: "获取成功", data, timestamp: Date.now() }
   },
 })
