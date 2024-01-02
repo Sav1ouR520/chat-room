@@ -3,7 +3,6 @@ type ResponseData<T = any> = {
   message: string
   timestamp: number
 }
-
 type VerifyReponse = ResponseData<{
   verify: boolean
 }>

@@ -23,7 +23,7 @@
 import { useToast } from 'vue-toastification';
 import type { VerifyReponse, UploadAttr } from '@/types';
 import type UploadItemVue from '../form/UploadItem.vue';
-import vueCropper from '@/module/vue-cropper'
+import vueCropper from '@/module/cropper'
 
 const toast = useToast();
 
@@ -67,7 +67,7 @@ const [readying, toggle] = useToggle()
 // 手动触发网络请求，并在成功后重置表单
 const { run } = useRequest(props.fetchModify, {
   onSuccess: ({ data, message }) =>
-    data.verify ? (toast.success(message), emit('close', 'inside'), option.img = "", upload.value?.clear()) : toast.error(message)
+    data.verify ? (toast.success(message), emit('close', 'update'), option.img = "", upload.value?.clear()) : toast.error(message)
   , onFinally: () => toggle()
   , manual: true
 })
@@ -84,5 +84,5 @@ const onSubmit = () => {
 }
 
 // 向父组件发送关闭消息
-const emit = defineEmits<{ close: ['inside'] }>()
+const emit = defineEmits<{ close: ['update'] }>()
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <div flex justify-center items-center p-2 rounded dark:box-shadow-black box-shadow-white mx-8>
+  <div flex justify-center items-center p-2 rounded dark:box-shadow-black box-shadow-white mx-8 mb-4 w-75>
     <div relative flex justify-center items-center h-8 w-8 rounded dark:border-slate-700 ref="box">
       <div rounded-full overflow-hidden bg-white h-8 w-8 @click="activeUser = true">
         <img :src=userIcon>
@@ -21,15 +21,17 @@
 // 传递筛选的组名
 const roomName = ref("")
 
-// 搜索房间
-const emit = defineEmits<{ getValue: [value: string] }>()
-watch(roomName, () => emit('getValue', roomName.value))
+// 搜索房间 通过全局事件总线去通知
+const instance = getCurrentInstance()
+watch(roomName, () => instance!.proxy!.$Bus.emit("room-name", roomName.value))
 
 // 弹窗激活，并注入全局
 const [activeRoom, activeUser] = [ref(false), ref(false)]
 provide("activeRoom", activeRoom)
 provide("activeUser", activeUser)
 
-const userIcon = ref('')
+
+// 获取用户头像
+const userIcon = ref("")
 const getIcon = (icon: string) => userIcon.value = icon
 </script>

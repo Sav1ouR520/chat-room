@@ -39,7 +39,8 @@ const refresh = ref(Date.now())
 // 关闭弹窗
 const close = (value: string) => {
   active.value = false
-  value === 'inside' && (refreshRoom!.value = Date.now(), refresh.value = Date.now())
+  value === 'inside' && (refresh.value = Date.now())
+  value === 'update' && (refreshRoom!.value = Date.now(), refresh.value = Date.now())
 }
 
 // 获取全局注入 refreshRoom

@@ -1,5 +1,5 @@
 import { defineMock } from "vite-plugin-mock-dev-server"
-import { isEmail, isStrength, ResponseData } from "../utils"
+import { isEmail, isStrength, ResponseData } from "../shared/utils"
 import { user } from "./user.data"
 
 export default defineMock({

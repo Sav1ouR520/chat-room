@@ -16,9 +16,8 @@ const route = useRoute()
 const roomId = ref(route.params['id'] as string)
 watch(route, () => roomId.value = route.params['id'] as string)
 
-// 注入全局依赖 refreshRoom 用于修改房间信息时，局部更新
-const refreshRoom = ref(Date.now())
+// 注入全局依赖 用于修改信息时，局部更新
+const [refreshUser, refreshRoom] = [ref(Date.now()), ref(Date.now())]
+provide("refreshUser", refreshUser)
 provide("refreshRoom", refreshRoom)
-
-
 </script>

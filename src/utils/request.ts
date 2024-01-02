@@ -1,5 +1,7 @@
-import { AxiosError, type AxiosResponse } from "axios"
+import type { AxiosError, AxiosResponse } from "axios"
 import { createAxios } from "@/module/http"
+import { TokenStore } from "@/stores"
+import { fetchRefreshToken } from "@/apis"
 
 const request = createAxios({
   baseURL: import.meta.env.VITE_API_URL,
@@ -11,10 +13,9 @@ const request = createAxios({
 request.http.interceptors.request.use(
   config => {
     if (config.headers) {
-      const refreshToken = localStorage.getItem("refreshToken")
-      if (refreshToken && config.url === "/refresh") {
-        config.headers.Authorization = "Bearer " + refreshToken
-      }
+      const tokenStore = TokenStore()
+      if (tokenStore.accessToken) config.headers.Authorization = "Bearer " + tokenStore.accessToken
+      if (tokenStore.refreshToken && config.url === "/refresh") config.headers.Authorization = "Bearer " + tokenStore.refreshToken
     }
     return config
   },
@@ -26,10 +27,26 @@ request.http.interceptors.request.use(
 // 响应拦截器
 request.http.interceptors.response.use(
   (response: AxiosResponse) => {
-    return response.status === 200 ? Promise.resolve(response.data) : Promise.reject(response)
+    if (response.status === 200) {
+      const tokenStore = TokenStore()
+      const [accessToken, refreshToken] = [response.headers["access-token"], response.headers["refresh-token"]]
+      if (accessToken) tokenStore.accessToken = accessToken
+      if (refreshToken) tokenStore.refreshToken = refreshToken
+      return Promise.resolve(response.data)
+    }
+    return Promise.reject(response)
   },
   (error: AxiosError) => {
-    if (error.response!.status) Promise.reject(error)
+    const tokenStore = TokenStore()
+    if (error.config?.url === "/refresh") {
+      tokenStore.$reset()
+      const router = useRouter()
+      router.push({ name: "login" })
+    } else if (error.response?.status === 401 && !tokenStore.isRefreshing) {
+      tokenStore.isRefreshing = true
+      fetchRefreshToken().finally(() => (tokenStore.isRefreshing = false))
+    }
+    Promise.reject(error)
   },
 )
 

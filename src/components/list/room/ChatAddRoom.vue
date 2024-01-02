@@ -17,7 +17,7 @@
 </template>
 
 <script setup lang="ts">
-import vueCropper from '@/module/vue-cropper'
+import vueCropper from '@/module/cropper'
 import { fetchCreateRoom, } from '@/apis';
 import { type InputAttr, type UploadAttr } from '@/types';
 import { useToast } from 'vue-toastification';
@@ -85,3 +85,5 @@ onMounted(() => watch(upload.value!.files, () => {
 // 获取文件上传组件
 const upload = ref<InstanceType<typeof UploadItemVue>>()
 </script>
+@/module/cropper
+@/module/cropper

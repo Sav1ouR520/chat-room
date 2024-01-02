@@ -24,7 +24,7 @@
 import { fetchModifyUser, fetchUserInfo } from '@/apis';
 
 // 获取当前账号的信息
-const { data: user } = useRequest(fetchUserInfo, { onSuccess: ({ data }) => (modify.value.icon = data.userIcon, emit('icon', data.userIcon)) })
+const { data: user, run } = useRequest(fetchUserInfo, { onSuccess: ({ data }) => (modify.value.icon = data.userIcon, emit('icon', data.userIcon)) })
 
 // 设置上传图片的属性
 const modify = ref({ "fetchModify": fetchModifyUser, "name": "userIcon", "icon": "", "formIcon": 'userIcon' })
@@ -39,7 +39,10 @@ const active = inject<Ref<boolean>>('activeUser')
 const refresh = ref(Date.now())
 
 // 关闭弹窗
-const close = (value: string) => (active!.value = false, refresh.value = value === 'inside' ? Date.now() : refresh.value)
-
+const close = (value: string) => {
+  active!.value = false
+  if (value === 'inside' || value === 'update') refresh.value = Date.now()
+  value === 'update' && (run(), emit('icon', modify.value.icon))
+}
 const emit = defineEmits<{ icon: [string] }>()
 </script>

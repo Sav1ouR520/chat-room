@@ -9,4 +9,4 @@ const generate = () => ({
   role: "user",
 })
 
-export const list = defineMockData("member-list", Array.from({ length: 30 }, generate))
+export const member = defineMockData("member-list", Array.from({ length: 30 }, generate))

@@ -16,8 +16,9 @@ const generate = () => ({
     message: faker.lorem.sentence(),
     sendTime: dayjs(faker.date.past()).format("HH:mm a"),
   },
+  owner: "019261fe-d423-3e24-373d-9164fe6f5c03",
 })
 
-const list = defineMockData("chat-list", Array.from({ length: 30 }, generate))
+const list = defineMockData("chat-list", Array.from({ length: 10 }, generate))
 
 export { list, room }

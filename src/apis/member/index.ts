@@ -1,2 +1,2 @@
-export * from "./get-member"
-export * from "./delete-member"
+export * from "./list"
+export * from "./delete"

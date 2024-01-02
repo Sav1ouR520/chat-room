@@ -45,7 +45,7 @@ const { handleSubmit, resetForm } = useForm<{ password: string, new_password: st
 const { run } = useRequest(fetchModifyUser, {
   onSuccess: ({ data, message }) =>
     data.verify ?
-      (toast.success(message), active!.value = false, emit('close', 'inside'), resetForm()) :
+      (toast.success(message), active!.value = false, emit('close', 'update'), resetForm()) :
       toast.error(message)
   , onFinally: () => toggle(), manual: true
 })
@@ -54,5 +54,5 @@ const { run } = useRequest(fetchModifyUser, {
 const onSubmit = handleSubmit((values) => (toggle(), run(values)))
 
 // 向父组件发送关闭消息
-const emit = defineEmits<{ close: ['inside'] }>()
+const emit = defineEmits<{ close: ['update'] }>()
 </script>

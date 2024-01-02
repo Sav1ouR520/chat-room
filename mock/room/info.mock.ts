@@ -1,5 +1,5 @@
 import { defineMock } from "vite-plugin-mock-dev-server"
-import { ResponseData } from "../utils"
+import { ResponseData } from "../shared/utils"
 import { room, list } from "./room.data"
 
 export default defineMock({
