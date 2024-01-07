@@ -1,16 +1,14 @@
-import { ACCESS_KEY, defineBaseMock, generateMember, members, rooms, users } from "../shared"
-import jwt from "jsonwebtoken"
 import { faker } from "@faker-js/faker"
+import { defineMock } from "vite-plugin-mock-dev-server"
+import { API_URL, generateMember, getUserId, members, rooms, users } from "../shared"
 
-export default defineBaseMock({
-  url: "/room",
-  enabled: true,
+export default defineMock({
+  url: API_URL + "/room",
   method: "POST",
   response(req, res) {
-    const authorization = req.headers.authorization!.replace("Bearer ", "")
-    try {
+    const userId = getUserId(req, res)
+    if (userId) {
       const roomId = faker.string.uuid()
-      const userId = jwt.verify(authorization, ACCESS_KEY)["userId"]
       const userName = users.value.find(item => item.userId === userId)?.userName
       const member = generateMember(roomId, userId, userName, "admin")
       members.value.push(member)
@@ -22,10 +20,7 @@ export default defineBaseMock({
         roomId,
         code: faker.string.nanoid(),
       })
-      res.end(JSON.stringify({ message: `成功创建聊天室`, data: { verify: true }, timestamp: Date.now() }))
-    } catch (err) {
-      res.statusCode = 401
-      res.end(JSON.stringify({ message: "获取失败,token不正确或过期", data: { verify: false }, timestamp: Date.now() }))
+      res.end(JSON.stringify({ message: `成功创建聊天室`, data: null, action: true, timestamp: Date.now() }))
     }
   },
 })

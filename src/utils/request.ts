@@ -3,6 +3,7 @@ import { createAxios } from "@/module/http"
 import { TokenStore } from "@/stores"
 import { fetchRefreshToken } from "@/apis"
 import { router } from "@/router"
+import { useToast } from "vue-toastification"
 
 const request = createAxios({
   baseURL: import.meta.env.VITE_API_URL,
@@ -33,9 +34,12 @@ request.http.interceptors.response.use(
   (response: AxiosResponse) => {
     if (response.status === 200) {
       const tokenStore = TokenStore()
+      const toast = useToast()
       const [accessToken, refreshToken] = [response.headers["access-token"], response.headers["refresh-token"]]
       if (accessToken) tokenStore.accessToken = accessToken
       if (refreshToken) tokenStore.refreshToken = refreshToken
+      if (response.data.action && response.config.method !== "get") toast.success(response.data.message)
+      if (!response.data.action) toast.error(response.data.message)
       return Promise.resolve(response.data)
     }
     return Promise.reject(response)

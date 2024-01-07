@@ -16,11 +16,9 @@
 import { fetchModifyUser } from '@/apis';
 import type { InputAttr } from '@/types';
 import { password_valid } from '@/utils';
-import { useToast } from 'vue-toastification';
 
 import * as yup from "yup"
 const { t } = useI18n()
-const toast = useToast();
 
 // 获取全局user的激活弹窗
 const active = inject<Ref<boolean>>('activeUser')
@@ -42,10 +40,7 @@ const { handleSubmit, resetForm } = useForm<{ password: string, new_password: st
 
 // 手动触发网络请求，并在成功后重置表单
 const { run } = useRequest(fetchModifyUser, {
-  onSuccess: ({ data, message }) =>
-    data.verify ?
-      (toast.success(message), active!.value = false, emit('close', 'update'), resetForm()) :
-      toast.error(message)
+  onSuccess: ({ action }) => { if (action) { active!.value = false, emit('close', 'update'), resetForm() } }
   , onFinally: () => toggle(), manual: true
 })
 

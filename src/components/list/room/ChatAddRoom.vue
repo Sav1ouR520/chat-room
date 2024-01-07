@@ -20,12 +20,10 @@
 import vueCropper from '@/module/cropper'
 import { fetchCreateRoom, } from '@/apis';
 import { type InputAttr, type UploadAttr } from '@/types';
-import { useToast } from 'vue-toastification';
 import type UploadItemVue from '../../form/UploadItem.vue';
 
 import * as yup from "yup"
 const { t } = useI18n()
-const toast = useToast();
 
 // 获取全局room的激活弹窗
 const activeRoom = inject<Ref<boolean>>('activeRoom')
@@ -46,13 +44,8 @@ const [readying, toggle] = useToggle()
 
 // 手动触发网络请求，并在成功后重置表单
 const { run } = useRequest(fetchCreateRoom, {
-  onSuccess: ({ data, message }) =>
-    data.verify ? (
-      toast.success(message), emit('close', 'update'), activeRoom!.value = false,
-      resetForm(), option.img = "", option.canMoveBox = true, upload.value?.clear()
-    ) : toast.error(message)
-  , onFinally: () => toggle()
-  , manual: true
+  onSuccess: ({ action }) => { if (action) { emit('close', 'update'), activeRoom!.value = false, resetForm(), option.img = "", option.canMoveBox = true, upload.value?.clear() } }
+  , onFinally: () => toggle(), manual: true
 })
 
 // 验证表单 成功就发送请求

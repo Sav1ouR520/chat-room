@@ -1,14 +1,12 @@
-import { ACCESS_KEY, defineBaseMock, rooms, members, messages } from "../shared"
-import jwt from "jsonwebtoken"
+import { defineMock } from "vite-plugin-mock-dev-server"
+import { API_URL, rooms, members, messages, getUserId } from "../shared"
 
-export default defineBaseMock({
-  url: "/room/list",
-  enabled: true,
+export default defineMock({
+  url: API_URL + "/room/list",
   method: "GET",
   response(req, res) {
-    const authorization = req.headers.authorization!.replace("Bearer ", "")
-    try {
-      const userId = jwt.verify(authorization, ACCESS_KEY)["userId"]
+    const userId = getUserId(req, res)
+    if (userId) {
       const roomIds = members.value.filter(item => item.userId === userId).map(item => item.roomId)
       const room_list = rooms.value.filter(item => roomIds.includes(item.roomId) && item.roomName.includes(req.query["roomName"] ? req.query["roomName"] : ""))
       const data = room_list.map(room => {
@@ -20,25 +18,7 @@ export default defineBaseMock({
         }
         return { ...room, code: undefined }
       })
-      res.end(JSON.stringify({ message: "获取成功", data, timestamp: Date.now() }))
-    } catch (err) {
-      res.statusCode = 401
-      res.end(JSON.stringify({ message: "获取失败,token不正确或过期", data: { verify: false }, timestamp: Date.now() }))
+      res.end(JSON.stringify({ message: "聊天室列表获取成功", data, action: true, timestamp: Date.now() }))
     }
   },
 })
-
-// {
-//     message: {
-//         memberName: string;
-//         messageId: string;
-//         memberId: string;
-//         message: string;
-//         sendTime: Date;
-//     };
-//     roomId: string;
-//     roomName: string;
-//     roomIcon: string;
-//     owner: string;
-//     createdTime: Date;
-// } []

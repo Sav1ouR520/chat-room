@@ -12,6 +12,7 @@
 
 <script lang="ts" setup>
 import { RoomStore } from '@/stores';
+import { useWS } from '@/utils';
 
 // 当有房间显示聊天室，切换房间的更新聊天室
 const route = useRoute()
@@ -23,4 +24,7 @@ watch(route, () => room.room.roomId = route.params['id'] as string)
 const [refreshUser, refreshRoom] = [ref(Date.now()), ref(Date.now())]
 provide("refreshUser", refreshUser)
 provide("refreshRoom", refreshRoom)
+
+// 创建WebSocket连接
+useWS()
 </script>

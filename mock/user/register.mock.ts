@@ -1,9 +1,9 @@
 import { faker } from "@faker-js/faker"
-import { defineBaseMock, ResponseData, isStrength, isEmail, users } from "../shared"
+import { ResponseData, isStrength, isEmail, users, API_URL } from "../shared"
+import { defineMock } from "vite-plugin-mock-dev-server"
 
-export default defineBaseMock({
-  url: "/register",
-  enabled: true,
+export default defineMock({
+  url: API_URL + "/register",
   method: "POST",
   body: ({ body }): ResponseData => {
     if (isStrength(body.password) && isEmail(body.account) && body.code) {
@@ -16,9 +16,9 @@ export default defineBaseMock({
         userIcon: "",
         refreshToken: "",
       })
-      return { message: "注册成功", data: { verify: true }, timestamp: Date.now() }
+      return { message: "注册成功", data: null, action: true, timestamp: Date.now() }
     } else {
-      return { message: "注册失败", data: { verify: false }, timestamp: Date.now() }
+      return { message: "注册失败", data: null, action: false, timestamp: Date.now() }
     }
   },
 })

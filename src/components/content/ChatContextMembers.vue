@@ -27,9 +27,6 @@
 <script setup lang="ts">
 import { fetchDeleteMember, fetchGetMemberList, type MemberWithUser } from '@/apis';
 import { RoomStore } from '@/stores';
-import { useToast } from 'vue-toastification';
-
-const toast = useToast();
 
 // 获取聊天室信息
 const room = RoomStore()
@@ -63,8 +60,7 @@ const getMemberId = (member: { memberId: string, value: boolean }) =>
 
 // 提交修改
 const { run: deleteMemebr } = useRequest(fetchDeleteMember, {
-  onSuccess: ({ data, message }) =>
-    data.verify ? (modifyToggle(), toast.success(message), getMemeber()) : toast.error(message)
+  onSuccess: ({ action }) => { if (action) { modifyToggle(), getMemeber() } }
   , manual: true
 })
 

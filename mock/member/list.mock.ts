@@ -1,13 +1,12 @@
-import { ACCESS_KEY, defineBaseMock, members, users } from "../shared"
-import jwt from "jsonwebtoken"
-export default defineBaseMock({
-  url: "/member/list",
-  enabled: true,
+import { defineMock } from "vite-plugin-mock-dev-server"
+import { API_URL, getUserId, members, users } from "../shared"
+
+export default defineMock({
+  url: API_URL + "/member/list",
   method: "GET",
   response(req, res) {
-    const authorization = req.headers.authorization!.replace("Bearer ", "")
-    try {
-      const userId = jwt.verify(authorization, ACCESS_KEY)["userId"]
+    const userId = getUserId(req, res)
+    if (userId) {
       const member = members.value.find(item => item.userId == userId)
       if (member) {
         const member_List = members.value.filter(item => item.roomId === req.query["roomId"])
@@ -15,24 +14,10 @@ export default defineBaseMock({
           const user = users.value.find(user => user.userId === member.userId)
           return { ...member, userId: undefined, user: { userIcon: user!.userIcon, userId: user!.userId }, roomId: undefined }
         })
-        res.end(JSON.stringify({ message: "获取成功", data, timestamp: Date.now() }))
+        res.end(JSON.stringify({ message: "成员列表获取成功", data, action: true, timestamp: Date.now() }))
       } else {
-        res.end(JSON.stringify({ message: "获取失败", data: null, timestamp: Date.now() }))
+        res.end(JSON.stringify({ message: "成员列表获取失败", data: null, action: false, timestamp: Date.now() }))
       }
-    } catch (err) {
-      res.statusCode = 401
-      res.end(JSON.stringify({ message: "获取失败,token不正确或过期", data: { verify: false }, timestamp: Date.now() }))
     }
   },
 })
-
-// {
-//   user: {
-//     userIcon: string
-//     userId: string
-//   }
-//   memberId: string
-//   memberName: string
-//   joinTime: Date
-//   role: "user" | "admin"
-// }[]

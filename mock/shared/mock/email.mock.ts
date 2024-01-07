@@ -1,9 +1,7 @@
 import { defineMock } from "vite-plugin-mock-dev-server"
-import { ResponseData } from "../utils"
+import { API_URL, ResponseData } from "../utils"
+
 export default defineMock({
-  url: "/api/sendEmail",
-  enabled: true,
-  method: "GET",
-  delay: 1000,
-  body: (): ResponseData => ({ data: { nextTime: Date.now() + 60 * 1000 }, message: "验证码发送成功", timestamp: Date.now() }),
+  url: API_URL + "/sendEmail",
+  body: (): ResponseData => ({ action: true, data: { nextTime: Date.now() + 60 * 1000 }, message: "验证码发送成功", timestamp: Date.now() }),
 })

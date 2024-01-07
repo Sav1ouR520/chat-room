@@ -23,11 +23,9 @@
 import { fetchModifyUser } from '@/apis';
 import type { InputAttr } from '@/types';
 import dayjs from 'dayjs';
-import { useToast } from 'vue-toastification';
 
 import * as yup from "yup"
 const { t } = useI18n()
-const toast = useToast();
 
 // 获取全局user的激活弹窗
 const active = inject<Ref<boolean>>('activeUser')
@@ -52,11 +50,8 @@ setFieldValue('userName', props.userName)
 
 // 手动触发网络请求，并在成功后重置表单
 const { run } = useRequest(fetchModifyUser, {
-  onSuccess: ({ data, message }) =>
-    data.verify ?
-      (toast.success(message), resetForm(), emit('close', 'update'), active!.value = false) :
-      toast.error(message)
-  , onFinally: () => toggle(), manual: true
+  onSuccess: ({ action }) => { if (action) { resetForm(), emit('close', 'update'), active!.value = false } },
+  onFinally: () => toggle(), manual: true
 })
 
 // 验证表单 成功就发送请求

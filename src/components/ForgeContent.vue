@@ -22,10 +22,9 @@
 import { fetchForge, fetchSendEmail, type ForgeRequest } from '@/apis';
 import type { Convert, InputAttr } from "@/types"
 import { email_valid, password_valid } from "@/utils"
-import { useToast } from "vue-toastification";
+
 import * as yup from "yup"
 const { t } = useI18n()
-const toast = useToast();
 const router = useRouter()
 
 // 设置input属性
@@ -50,7 +49,7 @@ const [sumbit_readying, sumbit_toggle] = useToggle()
 
 // 手动触发网络请求，并在成功后重置表单
 const { run: sumbit } = useRequest(fetchForge, {
-  onSuccess: ({ data, message }) => data.verify ? (toast.success(message), resetForm(), router.push('/')) : toast.error(message),
+  onSuccess: ({ action }) => { if (action) { resetForm(), router.push('/') } },
   onFinally: () => sumbit_toggle(), manual: true
 })
 
@@ -84,7 +83,7 @@ setButton()
 // 发送邮箱请求
 const { run: sendEmail } = useRequest(fetchSendEmail, {
   onBefore: () => (nextTime.value = Date.now() + 60 * 1000, resume()),
-  onSuccess: ({ message, data }) => (toast.success(message), nextTime.value = data.nextTime),
+  onSuccess: ({ data }) => (nextTime.value = data.nextTime),
   manual: true
 })
 </script>

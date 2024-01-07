@@ -25,13 +25,11 @@
 <script lang="ts" setup>
 import { fetchDeleteRoom, fetchModifyRoom, } from '@/apis';
 import type { InputAttr } from '@/types';
-import { useToast } from 'vue-toastification';
 import dayjs from 'dayjs';
 
 import * as yup from "yup"
 import { RoomStore } from '@/stores';
 const { t } = useI18n()
-const toast = useToast();
 const router = useRouter()
 
 // 获取聊天室信息
@@ -55,15 +53,7 @@ setFieldValue('roomName', room.room.roomName)
 
 // 手动触发网络请求，并在成功后重置表单
 const { run: modifyRoom } = useRequest(fetchModifyRoom, {
-  onSuccess: ({ data, message }) => {
-    if (data.verify) {
-      emit('close', 'update')
-      toast.success(message)
-      resetForm()
-    } else {
-      toast.error(message)
-    }
-  },
+  onSuccess: ({ action }) => { if (action) { emit('close', 'update'), resetForm() } },
   onFinally: () => toggle(),
   manual: true
 })
@@ -76,15 +66,7 @@ const emit = defineEmits<{ close: ['update'] }>()
 
 // 删除聊天室
 const { run: deleteRoom } = useRequest(() => fetchDeleteRoom(room.room.roomId), {
-  onSuccess: ({ data, message }) => {
-    if (data.verify) {
-      toast.success(message)
-      emit('close', 'update')
-      router.push({ name: "main" })
-    } else {
-      toast.error(message)
-    }
-  },
+  onSuccess: ({ action }) => { if (action) { emit('close', 'update'), router.push({ name: "main" }) } },
   onFinally: () => toggle(),
   manual: true
 },)

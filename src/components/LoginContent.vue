@@ -22,11 +22,9 @@
 <script setup lang="ts">
 import { fetchLogin, type LoginRequest } from '@/apis';
 import type { Convert, InputAttr } from "@/types"
-import { useToast } from "vue-toastification";
 
 import * as yup from "yup"
 const { t } = useI18n()
-const toast = useToast();
 const router = useRouter()
 
 // 设置input属性
@@ -48,13 +46,8 @@ const [readying, toggle] = useToggle()
 
 // 手动触发网络请求，并在成功后重置表单
 const { run } = useRequest(fetchLogin, {
-  onSuccess: ({ data, message }) => {
-    if (data.verify) {
-      toast.success(message)
-      resetForm()
-      router.push('/main')
-    } else { toast.error(message) }
-  }, onFinally: () => toggle(), manual: true
+  onSuccess: ({ action }) => { if (action) { resetForm(), router.push('/main') } },
+  onFinally: () => toggle(), manual: true
 })
 
 // 提交请求

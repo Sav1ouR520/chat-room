@@ -1,7 +1,10 @@
 import type { ResponseData } from "@/types"
 import { request } from "@/utils"
+
+// Request
 type GetMessageRequest = { roomId: string }
 
+// Response
 type ChatMessageItem = {
   messageId: string
   member: {

@@ -1,17 +1,17 @@
-import type { VerifyResponse } from "@/types"
+import type { ResponseData } from "@/types"
 import { request } from "@/utils"
 
 //Requset
 type ModifyUserRequest = { userName?: string; password?: string; newPassword?: string; userIcon?: Blob }
 
 /**
- * 用户修改信息功能，根据verify值判断是否成功
+ * 用户修改信息功能，根据action值判断是否成功
  * @param user - { userName?: string; password?: string; newPassword?: string; userIcon?: Blob }
  *
- * @returns VerifyResponse
+ * @returns null
  */
 const fetchModifyUser = (user: ModifyUserRequest) =>
-  request.put<ModifyUserRequest, VerifyResponse>("/user")(user, {
+  request.put<ModifyUserRequest, ResponseData<null>>("/user")(user, {
     headers: {
       "Content-Type": "`multipart/form-data",
     },

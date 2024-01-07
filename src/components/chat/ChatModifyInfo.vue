@@ -10,7 +10,7 @@
         <vueCropper ref="cropper" v-bind="option" @realTime="realTime" />
       </div>
       <div flex flex-col justify-between md:w-50 md:ml-4>
-        <div flex justify-center h-50 rounded overflow-hidden max-md:hidden><img :src='previews' ></div>
+        <div flex justify-center h-50 rounded overflow-hidden max-md:hidden><img :src='previews'></div>
         <FileListItem :remove="upload!.remove" :files="upload!.files" />
         <ButtonItem max-md:mt-2 :readying="readying" :name="$t('main.submit_button')" @click="onSubmit" />
       </div>
@@ -22,7 +22,7 @@
 </template>
 <script setup lang="ts">
 import { useToast } from 'vue-toastification';
-import type { VerifyResponse, UploadAttr } from '@/types';
+import type { ResponseData, UploadAttr } from '@/types';
 import type UploadItemVue from '../form/UploadItem.vue';
 import vueCropper from '@/module/cropper'
 
@@ -31,7 +31,7 @@ const toast = useToast();
 // 设置默认图片
 const props = withDefaults(defineProps<{
   icon: string, name: string, formIcon: string, params?: object,
-  fetchModify: (...arg: any[]) => Promise<VerifyResponse>
+  fetchModify: (...arg: any[]) => Promise<ResponseData>
 }>(), { icon: "" })
 
 // 设置input属性
@@ -67,10 +67,8 @@ const [readying, toggle] = useToggle()
 
 // 手动触发网络请求，并在成功后重置表单
 const { run } = useRequest(props.fetchModify, {
-  onSuccess: ({ data, message }) =>
-    data.verify ? (toast.success(message), emit('close', 'update'), option.img = "", upload.value?.clear()) : toast.error(message)
-  , onFinally: () => toggle()
-  , manual: true
+  onSuccess: ({ action, message }) => { if (action) { (toast.success(message), emit('close', 'update'), option.img = "", upload.value?.clear()) } }
+  , onFinally: () => toggle(), manual: true
 })
 
 // 验证表单 成功就发送请求
