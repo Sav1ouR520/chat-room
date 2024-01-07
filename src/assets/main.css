@@ -9,6 +9,10 @@ body,
   transition-duration: 300ms;
   background-color: var(--bg-color);
   color: var(--text-color);
+
+  -webkit-tap-highlight-color: transparent;
+  -webkit-tap-highlight-color: transparent;
+  -moz-tap-highlight-color: transparent;
 }
 
 :root {

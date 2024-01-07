@@ -1,17 +1,15 @@
 <template>
   <div flex flex-col h-full>
-    <div flex-grow>
+    <div flex-grow font-bold>
       <div flex justify-center items-center mb-2>{{ $t('main.modify_userName_title') }}</div>
-      <InputItem v-bind="form.userName" font-bold />
-      <div flex justify-between items-center border-2 font-bold bg-gray-300 dark:bg-gray-500 rounded px-2 py-1 w-full
-        mb-4>
+      <InputItem v-bind="form.userName" />
+      <div flex justify-between items-center border-2 bg-gray-300 dark:bg-gray-500 rounded px-2 py-1 w-full mb-4>
         <div mr-4>{{ $t('main.account') }}</div>
         <div>{{ account }}</div>
       </div>
-      <div flex justify-between items-center border-2 font-bold bg-gray-300 dark:bg-gray-500 rounded px-2 py-1 w-full
-        mb-4>
+      <div flex justify-between items-center border-2 bg-gray-300 dark:bg-gray-500 rounded px-2 py-1 w-full mb-4>
         <div mr-4> {{ $t('main.register_time') }}</div>
-        <div>{{ dayjs(props.registerTime).format("YYYY-MM-DD hh:MM:ss") }}</div>
+        <div>{{ dayjs(registerTime).format("YYYY-MM-DD hh:MM:ss") }}</div>
       </div>
     </div>
     <div flex>

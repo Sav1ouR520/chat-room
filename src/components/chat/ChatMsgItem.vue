@@ -1,17 +1,25 @@
 <template>
-  <div>
-    <div flex items-center mb-2>
-      <div w-6 h-6 overflow-hidden rounded-full bg-white><img :src="user.userIcon" onerror="this.style.display='none';">
-      </div>
-      <h2 mx-4>{{ memberName }}</h2>
-      <span text-2 text-gray-500>{{ sendTime }}</span>
+  <div flex :class="room.member.memberId === member.memberId ? 'flex-row-reverse' : ''">
+    <div w-8 h-8 flex-shrink-0 overflow-hidden rounded-full bg-white>
+      <img :src="user.userIcon" onerror="this.style.display='none';" w-full h-full>
     </div>
-    <div inline-block dark:bg-zinc-700 bg-gray-200 rounded px-4 py-2 class="max-w-4/5">
-      <p>{{ message }}</p>
+    <div flex flex-col mx-2 flex-grow>
+      <div flex mb-1 :class="room.member.memberId === member.memberId ? 'flex-row-reverse' : ''">{{ member.memberName }}
+      </div>
+      <div flex items-end :class="room.member.memberId === member.memberId ? 'flex-row-reverse' : ''">
+        <div inline-block dark:bg-zinc-700 bg-gray-200 rounded px-3 py-1 class="max-w-4/5"> {{ message }}</div>
+        <div mx-2 text-2 text-gray-500>{{ dayjs(sendTime).format("HH:mm a") }}</div>
+      </div>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-defineProps<{ messageId: string, memberId: string, memberName: string, sendTime: string, message: string, user: { userIcon: string, } }>()
+import type { ChatMessageItem } from "@/apis";
+import { RoomStore } from "@/stores";
+import dayjs from "dayjs"
+defineProps<ChatMessageItem>()
+
+// 获取聊天室信息
+const room = RoomStore()
 </script>

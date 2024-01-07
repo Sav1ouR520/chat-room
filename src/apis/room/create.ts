@@ -1,18 +1,17 @@
-import type { VerifyReponse } from "@/types"
+import type { VerifyResponse } from "@/types"
 import { request } from "@/utils"
-type CreateRoomRequest = {
-  roomIcon: Blob
-  roomName: string
-}
+
+// Request
+type CreateRoomRequest = { roomIcon: Blob; roomName: string }
 
 /**
- * 创建聊天室
- * @param room 参数为图片和房间名
+ * 创建聊天室，根据verify值判断是否成功
+ * @param room - { roomIcon: Blob; roomName: string }
  *
- * @returns VerifyReponse
+ * @returns VerifyResponse
  */
 const fetchCreateRoom = (room: CreateRoomRequest) =>
-  request.post<CreateRoomRequest, VerifyReponse>(`/room`)(room, {
+  request.post<CreateRoomRequest, VerifyResponse>(`/room`)(room, {
     headers: {
       "Content-Type": "`multipart/form-data",
     },

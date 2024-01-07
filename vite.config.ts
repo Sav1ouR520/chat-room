@@ -22,6 +22,16 @@ import Inspect from "vite-plugin-inspect"
 import VueDevTools from "vite-plugin-vue-devtools"
 import TsconfigPaths from "vite-tsconfig-paths"
 import removeConsole from "vite-plugin-remove-console"
+import "dotenv/config"
+
+// 文件上传提示
+import { Stream } from "node:stream"
+interface Part extends Stream {
+  name: string | null
+  originalFilename: string | null
+  mimetype: string | null
+}
+import { faker } from "@faker-js/faker"
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode, command }) => {
@@ -78,7 +88,14 @@ export default defineConfig(({ mode, command }) => {
       UnoCSS({ configFile: "uno.config.ts" }),
 
       // https://github.com/pengzhanbo/vite-plugin-mock-dev-server
-      MockDevServerPlugin(),
+      MockDevServerPlugin({
+        wsPrefix: ["/api"],
+        formidableOptions: {
+          filename: (name: string, ext: string, part: Part) => {
+            return part.name + "-" + faker.string.uuid() + "." + part.mimetype?.split("/")[1]
+          },
+        },
+      }),
     ],
     resolve: {
       alias: {
@@ -87,6 +104,7 @@ export default defineConfig(({ mode, command }) => {
     },
     server: {
       proxy: {
+        "/chat": "localhost:8080",
         "^/api": {
           target: "",
           changeOrigin: true,

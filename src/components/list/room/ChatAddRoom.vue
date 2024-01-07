@@ -4,8 +4,8 @@
     <vueCropper ref="cropper" v-bind="option" />
   </div>
   <UploadItem v-bind="room.roomIcon" ref="upload">
-    <div flex justify-between items-center border-2 border-gray-300 rounded p-2 v-for="(item, index) in upload?.files"
-      :key=index>
+    <div flex justify-between items-center border-2 border-gray-300 rounded p-2 mt-4
+      v-for="(item, index) in upload?.files" :key=index>
       <div truncate>{{ item.name }}</div>
       <div cursor-pointer @click="upload?.remove(index)"><Icon-material-symbols:close /></div>
     </div>
@@ -48,7 +48,7 @@ const [readying, toggle] = useToggle()
 const { run } = useRequest(fetchCreateRoom, {
   onSuccess: ({ data, message }) =>
     data.verify ? (
-      toast.success(message), emit('close', 'inside'), activeRoom!.value = false,
+      toast.success(message), emit('close', 'update'), activeRoom!.value = false,
       resetForm(), option.img = "", option.canMoveBox = true, upload.value?.clear()
     ) : toast.error(message)
   , onFinally: () => toggle()
@@ -66,7 +66,7 @@ const onSubmit = handleSubmit(({ creation_name: roomName }, actions) => {
 })
 
 // 向父组件发送关闭消息
-const emit = defineEmits<{ close: ['inside'] }>()
+const emit = defineEmits<{ close: ['update'] }>()
 
 // 截图相关设置
 const cropper = ref()
@@ -85,5 +85,3 @@ onMounted(() => watch(upload.value!.files, () => {
 // 获取文件上传组件
 const upload = ref<InstanceType<typeof UploadItemVue>>()
 </script>
-@/module/cropper
-@/module/cropper

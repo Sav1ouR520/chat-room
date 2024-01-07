@@ -1,5 +1,5 @@
 import { defineMock } from "vite-plugin-mock-dev-server"
-import { ResponseData } from "../shared/utils"
+import { ResponseData } from "../utils"
 export default defineMock({
   url: "/api/sendEmail",
   enabled: true,

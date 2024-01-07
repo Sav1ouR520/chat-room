@@ -3,9 +3,9 @@
     <div ml-4 h-12 w-12 flex justify-center items-center ref="box">
       <Icon-ep:more-filled text-6 cursor-pointer />
     </div>
-    <div absolute right-0 dark:bg-zinc-800 bg-gray-200 w-60 rounded-xl ref="info" v-show="show">
-      <div flex justify-between p-2 pb-0>
-        <div><span>{{ $t('main.member') }}</span></div>
+    <div absolute right--8 top--4 dark:bg-zinc-800 bg-gray-200 w-60 px-2 rounded-xl ref="info" v-show="show">
+      <div flex items-center justify-between px-2 mt-2>
+        <div>{{ $t('main.member') }}</div>
         <div v-show="!modify" @click="modifyToggle()">
           <span cursor-pointer><Icon-mdi:pencil /></span>
         </div>
@@ -15,7 +15,7 @@
           <span cursor-pointer @click="sumbit()"><Icon-mdi:check-outline /></span>
         </div>
       </div>
-      <div h-100 overflow-auto class="scrollbar-hidden" my-2>
+      <div max-h-100 overflow-auto class="scrollbar-hidden" mb-2>
         <template v-for="item in list" :key=item.memberId>
           <ChatMemberItem v-bind=item :modify=modify :reverse=reverse @member="getMemberId" />
         </template>
@@ -25,21 +25,23 @@
 </template>
 
 <script setup lang="ts">
-import { fetchDeleteMember, fetchGetMember, type Member } from '@/apis';
+import { fetchDeleteMember, fetchGetMemberList, type MemberWithUser } from '@/apis';
+import { RoomStore } from '@/stores';
 import { useToast } from 'vue-toastification';
 
 const toast = useToast();
 
-// 获取聊天室Id
-const roomId = useRoute().params['id'] as string
+// 获取聊天室信息
+const room = RoomStore()
+
+// 监听是否切换房间
+const route = useRoute()
+watch(route, () => getMemeber())
 
 // 获取聊天室成员列表
-const list = reactive<Member[]>([])
-const { run: getMemeber, } = useRequest(() => fetchGetMember({ roomId }), {
-  onSuccess: ({ data }) => {
-    list.splice(0, list.length)
-    list.push(...data)
-  }
+const list = reactive<MemberWithUser[]>([])
+const { run: getMemeber } = useRequest(() => fetchGetMemberList({ roomId: room.room.roomId }), {
+  onSuccess: ({ data }) => (list.splice(0, list.length), list.push(...data))
 })
 
 // 浮动的成员列表
@@ -67,7 +69,7 @@ const { run: deleteMemebr } = useRequest(fetchDeleteMember, {
 })
 
 // 提交修改，如果数组为0就直接关闭
-const sumbit = () => members.length != 0 ? deleteMemebr({ members, roomId }) : modifyToggle()
+const sumbit = () => members.length != 0 ? deleteMemebr({ members, roomId: room.room.roomId }) : modifyToggle()
 </script>
 
 <style scoped>

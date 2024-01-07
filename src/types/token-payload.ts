@@ -1,5 +1,5 @@
 type TokenPayload = {
-  id: string
+  userId: string
   exp: number
   iat: number
 }

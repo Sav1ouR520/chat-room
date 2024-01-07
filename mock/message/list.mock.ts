@@ -1,12 +1,29 @@
-import { defineMock } from "vite-plugin-mock-dev-server"
-import { ResponseData } from "../shared/utils"
-import { message } from "./message.data"
+import { ResponseData, defineBaseMock, members, messages, users } from "../shared"
 
-export default defineMock({
-  url: "/api/message",
+export default defineBaseMock({
+  url: "/message/list",
   enabled: true,
   method: "GET",
   body: ({ query }): ResponseData => {
-    return { message: `${query["roomId"]}获取成功`, data: message.value, timestamp: Date.now() }
+    const message_list = messages.value.filter(message => message.roomId === query["roomId"])
+    const data = message_list.map(message => {
+      const member = members.value.find(member => member.memberId === message.memberId)
+      const user = users.value.find(user => user.userId === member!.userId)
+      return { ...message, memberId: undefined, member: { memberId: member!.memberId, memberName: member!.memberName }, user: { userIcon: user!.userIcon }, roomId: undefined }
+    })
+    return { message: `获取成功`, data, timestamp: Date.now() }
   },
 })
+//  {
+//    memberId: undefined
+//    member: {
+//      memberId: string
+//      memberName: string
+//    }
+//    user: {
+//      userIcon: string
+//    }
+//    messageId: string
+//    message: string
+//    sendTime: Date
+//  }[]

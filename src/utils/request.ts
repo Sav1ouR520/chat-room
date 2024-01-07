@@ -2,6 +2,7 @@ import type { AxiosError, AxiosResponse } from "axios"
 import { createAxios } from "@/module/http"
 import { TokenStore } from "@/stores"
 import { fetchRefreshToken } from "@/apis"
+import { router } from "@/router"
 
 const request = createAxios({
   baseURL: import.meta.env.VITE_API_URL,
@@ -12,10 +13,13 @@ const request = createAxios({
 // 请求拦截器
 request.http.interceptors.request.use(
   config => {
+    const tokenStore = TokenStore()
     if (config.headers) {
-      const tokenStore = TokenStore()
       if (tokenStore.accessToken) config.headers.Authorization = "Bearer " + tokenStore.accessToken
       if (tokenStore.refreshToken && config.url === "/refresh") config.headers.Authorization = "Bearer " + tokenStore.refreshToken
+    }
+    if (!tokenStore.refreshToken && config.url === "/refresh") {
+      return Promise.reject("RefreshToken is empty")
     }
     return config
   },
@@ -40,7 +44,6 @@ request.http.interceptors.response.use(
     const tokenStore = TokenStore()
     if (error.config?.url === "/refresh") {
       tokenStore.$reset()
-      const router = useRouter()
       router.push({ name: "login" })
     } else if (error.response?.status === 401 && !tokenStore.isRefreshing) {
       tokenStore.isRefreshing = true

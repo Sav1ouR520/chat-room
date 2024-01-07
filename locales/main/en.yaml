@@ -57,6 +57,8 @@ main:
 
   roomName: Room Name
   room_owner: Room Owner
+  room_created_time: Create Time
+  delete_button: Delete
 
   roomName_error_empty: The room name can't  be empty
   roomName_error_length: The room name can't  exceed 20 characters

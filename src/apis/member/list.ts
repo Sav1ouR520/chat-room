@@ -1,15 +1,20 @@
 import type { ResponseData } from "@/types"
 import { request } from "@/utils"
+
+// Request
 type MemberListRequest = { roomId: string }
 
-type Member = { memberId: string; memberName: string; joinTime: string; user: { userIcon: string }; role: "user" | "admin" }
+// Response
+type Member = { memberId: string; memberName: string; joinTime: string; role: "user" | "admin" }
+type MemberWithRoomId = Member & { roomId: string }
+type MemberWithUser = Member & { user: { userIcon: string; userId: string } }
+type GetMemberListResponse = ResponseData<MemberWithUser[]>
 
-type GetMemberListReponse = ResponseData<Member[]>
 /**
  * 请求用户列表数据，返回所有列表和最新的一条聊天记录
- * @param room RoomId值
+ * @param room - { roomId: string }
  *
- * @returns GetMemberListReponse
+ * @returns GetMemberListResponse
  */
-const fetchGetMember = (room: MemberListRequest) => request.get<MemberListRequest, GetMemberListReponse>("/member")(room)
-export { fetchGetMember, type Member }
+const fetchGetMemberList = (room: MemberListRequest) => request.get<MemberListRequest, GetMemberListResponse>("/member/list")(room)
+export { fetchGetMemberList, type MemberWithUser, type Member, type MemberWithRoomId }

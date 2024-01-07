@@ -1,16 +1,14 @@
-import type { VerifyReponse } from "@/types"
+import type { VerifyResponse } from "@/types"
 import { request } from "@/utils"
-type LoginRequest = {
-  account: string
-  password: string
-}
+
+//Requset
+type LoginRequest = {account: string; password: string}
 
 /**
- * 用户登录功能，根据verify值判断是否登录成功
- * 登录成功为true，失败为false，原因查看message
- * @param LoginRequest 账号 密码
+ * 用户登录功能，根据verify值判断是否成功
+ * @param user - {account: string; password: string}
  *
- * @returns VerifyReponse
+ * @returns VerifyResponse
  */
-const fetchLogin = (user: LoginRequest) => request.post<LoginRequest, VerifyReponse>("/login")(user)
+const fetchLogin = (user: LoginRequest) => request.post<LoginRequest, VerifyResponse>("/login")(user)
 export { fetchLogin, type LoginRequest }

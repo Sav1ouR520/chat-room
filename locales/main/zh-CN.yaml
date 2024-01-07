@@ -57,6 +57,8 @@ main:
 
   roomName: 聊天室名
   room_owner: 聊天室主
+  room_created_time : 创建时间
+  delete_button: 删除
 
   roomName_error_empty: 聊天室名不能为空
   roomName_error_length: 聊天室名不能超过20位

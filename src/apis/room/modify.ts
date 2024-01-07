@@ -1,21 +1,17 @@
-import type { VerifyReponse } from "@/types"
+import type { VerifyResponse } from "@/types"
 import { request } from "@/utils"
-type ModifyRoomRequest = {
-  roomId: string
-  roomName?: String
-  roomIcon?: Blob
-  owner?: string
-}
+
+// Resquest
+type ModifyRoomRequest = { roomId: string; roomName?: String; roomIcon?: Blob; owner?: string }
 
 /**
- * 聊天室修改信息功能，根据verify值判断是否注册成功
- * 修改成功为true，失败为false，原因查看message
- * @param room
+ * 聊天室修改信息功能，根据verify值判断是否成功
+ * @param room -{ roomId: string; roomName?: String; roomIcon?: Blob; owner?: string }
  *
- * @returns VerifyReponse
+ * @returns VerifyResponse
  */
 const fetchModifyRoom = (room: ModifyRoomRequest) =>
-  request.put<ModifyRoomRequest, VerifyReponse>("/room")(room, {
+  request.put<ModifyRoomRequest, VerifyResponse>("/room")(room, {
     headers: {
       "Content-Type": "`multipart/form-data",
     },

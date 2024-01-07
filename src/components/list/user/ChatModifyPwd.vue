@@ -1,6 +1,6 @@
 <template>
   <div flex flex-col h-full>
-    <div flex-grow>
+    <div flex-grow font-bold>
       <div flex justify-center items-center mb-4>{{ $t('main.modify_password_title') }}</div>
       <InputItem v-bind="password" />
       <InputItem v-bind="newPassword" />
@@ -25,13 +25,12 @@ const toast = useToast();
 // 获取全局user的激活弹窗
 const active = inject<Ref<boolean>>('activeUser')
 
-
 // 按钮防止过频繁点击
 const [readying, toggle] = useToggle()
 
 // 设置input属性
-const password: InputAttr = { id: "main", name: 'password', type: 'password', position: 'left' }
-const newPassword: InputAttr = { id: "main", name: 'new_password', type: 'password', position: 'left' }
+const password: InputAttr = { id: "main", name: 'password', type: 'password', position: 'top' }
+const newPassword: InputAttr = { id: "main", name: 'new_password', type: 'password', position: 'top' }
 
 // 表单认证
 const { handleSubmit, resetForm } = useForm<{ password: string, new_password: string }>({

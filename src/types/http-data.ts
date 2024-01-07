@@ -3,7 +3,7 @@ type ResponseData<T = any> = {
   message: string
   timestamp: number
 }
-type VerifyReponse = ResponseData<{
+type VerifyResponse = ResponseData<{
   verify: boolean
 }>
 
@@ -11,4 +11,4 @@ type RequestQuery<T extends object = object, K extends keyof T = keyof T> = {
   [P in K]: T[P]
 }
 
-export type { RequestQuery, ResponseData, VerifyReponse }
+export type { RequestQuery, ResponseData, VerifyResponse }

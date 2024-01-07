@@ -5,8 +5,8 @@
         cursor-pointer v-show="modify" @click="toggle()">
         <Icon-mdi:check-bold text-2 v-show="value" />
       </div>
-      <div w-6 h-6 rounded-full flex-shrink-0 bg-white overflow-hidden :title="memberId"><img :src="user.userIcon"
-          onerror="this.style.display='none';">
+      <div w-6 h-6 rounded-full flex-shrink-0 bg-white overflow-hidden :title="memberId"><img :src="user.userIcon" w-full
+          h-full onerror="this.style.display='none';">
       </div>
       <div ml-2 truncate>{{ memberName }}</div>
     </div>
@@ -20,11 +20,11 @@
   </div>
 </template>
 <script setup lang="ts">
+import type { MemberWithUser } from "@/apis";
 import dayjs from "dayjs"
-import type { Member } from '@/apis';
 
 // 所需参数 切换选中/取消
-const props = defineProps<Member & { modify: boolean, reverse: boolean }>()
+const props = defineProps<MemberWithUser & { modify: boolean, reverse: boolean }>()
 const [value, toggle] = useToggle()
 
 // 监听memberId变化，变化发送被选中的memberId

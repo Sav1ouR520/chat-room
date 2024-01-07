@@ -1,13 +1,15 @@
-import type { VerifyReponse } from "@/types"
+import type { VerifyResponse } from "@/types"
 import { request } from "@/utils"
-type DeleteMemberRequest = { members: string[]; roomId: string }
 import qs from "qs"
 
+// Request
+type DeleteMemberRequest = { members: string[]; roomId: string }
+
 /**
- * 删除聊天室成员，返回verify，判断是否执行删除成功
- * @param member RoomId值 和 memberId数组
+ * 删除聊天室成员，根据verify值判断是否成功
+ * @param member - { members: string[]; roomId: string }
  *
- * @returns VerifyReponse
+ * @returns VerifyResponse
  */
-const fetchDeleteMember = (members: DeleteMemberRequest) => request.delete<DeleteMemberRequest, VerifyReponse>("/member")(members, { paramsSerializer: params => qs.stringify(params, { indices: false }) })
+const fetchDeleteMember = (members: DeleteMemberRequest) => request.delete<DeleteMemberRequest, VerifyResponse>("/member")(members, { paramsSerializer: params => qs.stringify(params, { indices: false }) })
 export { fetchDeleteMember }

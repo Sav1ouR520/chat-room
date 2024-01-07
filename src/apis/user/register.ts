@@ -1,17 +1,14 @@
-import type { VerifyReponse } from "@/types"
+import type { VerifyResponse } from "@/types"
 import { request } from "@/utils"
-type RegisterRequest = {
-  account: string
-  password: string
-  code: string
-}
+
+//Requset
+type RegisterRequest = { account: string; password: string; code: string }
 
 /**
- * 用户注册功能，根据verify值判断是否注册成功
- * 注册成功为true，失败为false，原因查看message
- * @param user 账号 密码 邮箱验证码
+ * 用户注册功能，根据verify值判断是否成功
+ * @param user - { account: string; password: string; code: string }
  *
- * @returns VerifyReponse
+ * @returns VerifyResponse
  */
-const fetchRegister = (user: RegisterRequest) => request.post<RegisterRequest, VerifyReponse>("/register")(user)
+const fetchRegister = (user: RegisterRequest) => request.post<RegisterRequest, VerifyResponse>("/register")(user)
 export { fetchRegister, type RegisterRequest }

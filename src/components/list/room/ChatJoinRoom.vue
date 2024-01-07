@@ -35,7 +35,7 @@ const [readying, toggle] = useToggle()
 const { run } = useRequest(fetchJoinRoom, {
   onSuccess: ({ data, message }) =>
     data.verify ? (
-      toast.success(message), emit('close', 'inside'),
+      toast.success(message), emit('close', 'update'),
       active!.value = false, resetForm()) :
       toast.error(message)
   , onFinally: () => toggle(), manual: true
@@ -45,6 +45,6 @@ const { run } = useRequest(fetchJoinRoom, {
 const onSubmit = handleSubmit((values) => (toggle(), run(values)))
 
 // 向父组件发送关闭消息
-const emit = defineEmits<{ close: ['inside'] }>()
+const emit = defineEmits<{ close: ['update'] }>()
 </script>
 

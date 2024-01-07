@@ -1,14 +1,14 @@
 <template>
   <div flex items-center @click="active = true">
-    <div rounded-full w-12 h-12 overflow-hidden bg-white><img :src="room?.data.roomIcon"></div>
-    <span mx-4 h-12 flex items-center text-xl truncate>{{ room?.data.roomName }}</span>
+    <div rounded-full w-12 h-12 overflow-hidden bg-white><img :src="room.room.roomIcon" w-full h-full></div>
+    <span mx-4 h-12 flex items-center text-xl truncate>{{ room.room.roomName }}</span>
   </div>
   <Teleport to="#app">
     <KeepAlive :key="refresh">
       <ChatDialog :className="'md:w-3/5 max-md:w-full  max-md:mx-4 max-w-180'" :title="$t(`main.room_diglog_title`)"
         v-if="active" @close="close">
-        <ChatModifyInfo v-bind="modify" :icon="room?.data.roomIcon" @close="close">
-          <ChatModifyRoom :roomName="room?.data.roomName" @close="close" />
+        <ChatModifyInfo v-bind="modify" :icon="room.room.roomIcon" @close="close">
+          <ChatModifyRoom @close="close" />
         </ChatModifyInfo>
       </ChatDialog>
     </KeepAlive>
@@ -16,19 +16,20 @@
 </template>
 <script setup lang="ts">
 import { fetchModifyRoom, fetchGetRoomInfo } from '@/apis';
+import { RoomStore } from '@/stores';
 
-// 获取聊天室Id
+// 获取聊天室信息
+const room = RoomStore()
+
+// 监听是否切换房间
 const route = useRoute()
-const roomId = ref(route.params['id'] as string)
-
-// 监听是否切换房间 如果切换则刷新聊天室
-watch(route, () => (roomId.value = route.params['id'] as string, run()))
+watch(route, () => getRoom())
 
 // 请求房间信息信息
-const { data: room, run } = useRequest(() => fetchGetRoomInfo(roomId.value))
+const { run: getRoom } = useRequest(() => fetchGetRoomInfo(room.room.roomId), { onSuccess: ({ data }) => room.setRoom(data) })
 
 // 设置上传图片的属性
-const modify = ref({ "fetchModify": fetchModifyRoom, "name": 'roomIcon', "formIcon": 'roomIcon', 'params': { roomId } })
+const modify = ref({ "fetchModify": fetchModifyRoom, "name": 'roomIcon', "formIcon": 'roomIcon', 'params': { roomId: room.room.roomId } })
 
 //激活弹窗
 const active = ref(false)
@@ -47,5 +48,5 @@ const close = (value: string) => {
 const refreshRoom = inject<Ref<number>>('refreshRoom', ref(Date.now()))
 
 // 当修改房间信息时候更新房间信息
-watch(refreshRoom, () => run())
+watch(refreshRoom, () => getRoom())
 </script>

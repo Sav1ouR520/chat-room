@@ -1,6 +1,6 @@
 <template>
   <div flex justify-center flex-col>
-    <button h-full px-3 py-2 rounded font-semibol text-white font-semibold :disabled="readying"
+    <button h-full p-2 rounded font-semibol text-white font-semibold :disabled="readying"
       :class="readying ? 'bg-gray-500' : 'hover:bg-green-400 bg-green-500'">
       {{ name }}
     </button>

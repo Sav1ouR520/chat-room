@@ -1,25 +1,19 @@
-import { defineMock } from "vite-plugin-mock-dev-server"
-import { ResponseData, ACCESS_KEY, REFRESH_KEY } from "../shared/utils"
-import { user } from "./user.data"
+import { ACCESS_KEY, ACCESS_TIME, REFRESH_KEY, REFRESH_TIME, defineBaseMock, users, ResponseData } from "../shared"
 import jwt from "jsonwebtoken"
-import "dotenv/config"
 
-const getUser = (body: Record<string, any>) => {
-  const [getUser] = user
-  return getUser().filter(user => user.account == body.account && user.password == body.password)[0]
-}
+const getUser = (body: Record<string, any>) => users.value.find(user => user.account == body.account && user.password == body.password)
 
-export default defineMock({
-  url: "/api/login",
+export default defineBaseMock({
+  url: "/login",
   enabled: true,
   method: "POST",
   delay: 1000,
   headers: ({ body }) => {
     const user = getUser(body)
-    user.refreshToken = jwt.sign({ id: user.id }, REFRESH_KEY, { expiresIn: 10 * 60 * 24 * 7 })
+    user!.refreshToken = jwt.sign({ userId: user!.userId }, REFRESH_KEY, { expiresIn: REFRESH_TIME })
     if (user)
       return {
-        "Access-Token": jwt.sign({ id: user.id }, ACCESS_KEY, { expiresIn: 60 }),
+        "Access-Token": jwt.sign({ userId: user.userId }, ACCESS_KEY, { expiresIn: ACCESS_TIME }),
         "Refresh-Token": user.refreshToken,
       }
     return {}

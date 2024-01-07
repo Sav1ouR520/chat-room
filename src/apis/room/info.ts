@@ -1,21 +1,18 @@
 import type { ResponseData } from "@/types"
 import { request } from "@/utils"
+
+// Resquest
 type GetRoomRequest = string
 
-type Room = {
-  roomId: string
-  roomIcon: string
-  roomName: string
-  owner: string
-  createdTime: Date
-}
+// Response
+type Room = { roomId: string; roomIcon: string; roomName: string; createdTime: string; owner: { memberId: string; memberName: string; userId: string; joinTime: string; role: "user" | "admin" } }
+type GetRoomInfoResponse = ResponseData<Room>
 
-type GetRoomInfoReponse = ResponseData<Room>
 /**
  * 根据聊天室ID，获取聊天室的信息
- * @param roomId 聊天室ID
+ * @param roomId - string
  *
- * @returns GetRoomInfoReponse
+ * @returns GetRoomInfoResponse
  */
-const fetchGetRoomInfo = (roomId: string) => request.get<GetRoomRequest, GetRoomInfoReponse>(`/room/${roomId}`)()
+const fetchGetRoomInfo = (roomId: GetRoomRequest) => request.get<GetRoomRequest, GetRoomInfoResponse>(`/room/${roomId}`)()
 export { fetchGetRoomInfo, type Room }

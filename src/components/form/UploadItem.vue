@@ -1,6 +1,6 @@
 <template>
   <div flex w-full flex-col>
-    <div v-show="props.uploadShow ? props.uploadShow : files.length == 0">
+    <div v-show="props.uploadShow ? props.uploadShow : !files.length">
       <div flex :class="position === 'left' ? '' : 'flex-col'">
         <div flex items-center mr-2 pb-1 :class="position === 'left' ? ' mb-4' : ''">
           <label :for=name>{{ $t(id + '.' + name) }}</label>

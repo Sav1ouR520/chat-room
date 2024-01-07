@@ -20,6 +20,7 @@
 </template>
 
 <script setup lang="ts">
+
 import { fetchRegister, fetchSendEmail, type RegisterRequest } from '@/apis';
 import type { Convert, InputAttr } from "@/types"
 import { email_valid, password_valid } from "@/utils"

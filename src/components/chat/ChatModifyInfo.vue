@@ -1,15 +1,16 @@
 <template>
   <div flex max-lg:flex-col max-lg:items-center>
     <UploadItem hidden v-bind="userIcon" ref="upload" />
-    <label bg-white cursor-pointer w-70 h-70 overflow-hidden rounded-full lg:mr-4 :for="name" v-if="!option.img">
-      <img :src='icon' w-70 h-70>
+    <label flex justify-center items-center cursor-pointer w-70 h-70 overflow-hidden lg:mr-4 :for="name"
+      v-if="!option.img">
+      <div bg-white rounded-full><img rounded-full w-70 h-70 :src='icon'></div>
     </label>
     <div flex w-full max-md:flex-col v-else>
       <div overflow-hidden rounded flex-grow h-70 max-md:mb-2>
         <vueCropper ref="cropper" v-bind="option" @realTime="realTime" />
       </div>
       <div flex flex-col justify-between md:w-50 md:ml-4>
-        <div flex justify-center h-50 rounded overflow-hidden max-md:hidden><img :src='previews'></div>
+        <div flex justify-center h-50 rounded overflow-hidden max-md:hidden><img :src='previews' ></div>
         <FileListItem :remove="upload!.remove" :files="upload!.files" />
         <ButtonItem max-md:mt-2 :readying="readying" :name="$t('main.submit_button')" @click="onSubmit" />
       </div>
@@ -21,7 +22,7 @@
 </template>
 <script setup lang="ts">
 import { useToast } from 'vue-toastification';
-import type { VerifyReponse, UploadAttr } from '@/types';
+import type { VerifyResponse, UploadAttr } from '@/types';
 import type UploadItemVue from '../form/UploadItem.vue';
 import vueCropper from '@/module/cropper'
 
@@ -30,7 +31,7 @@ const toast = useToast();
 // 设置默认图片
 const props = withDefaults(defineProps<{
   icon: string, name: string, formIcon: string, params?: object,
-  fetchModify: (...arg: any[]) => Promise<VerifyReponse>
+  fetchModify: (...arg: any[]) => Promise<VerifyResponse>
 }>(), { icon: "" })
 
 // 设置input属性
@@ -41,7 +42,7 @@ const cropper = ref()
 const option = reactive({
   img: "", canMove: false, canMoveBox: true,
   autoCrop: true, centerBox: true, fixedBox: true,
-  autoCropWidth: 150, autoCropHeight: 150, info: false
+  autoCropWidth: 200, autoCropHeight: 200, info: false
 })
 
 // 获取截图

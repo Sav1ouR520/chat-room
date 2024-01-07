@@ -5,12 +5,12 @@
         v-if="active" @close="close">
         <ChatModifyInfo v-bind="modify" @close="close">
           <ChatModifyPwd v-if="value" @close="close">
-            <button ml-4 bg-green-500 text-white px-2 rounded @click="toggle()">{{
+            <button ml-4 font-bold bg-green-500 text-white px-2 rounded @click="toggle()">{{
               $t('main.switch_button')
             }}</button>
           </ChatModifyPwd>
           <ChatModifyUser v-bind="user?.data" @close="close" v-else>
-            <button ml-4 bg-green-500 text-white px-2 rounded @click="toggle()">{{
+            <button ml-4 font-bold bg-green-500 text-white px-2 rounded @click="toggle()">{{
               $t('main.switch_button')
             }}</button>
           </ChatModifyUser>
