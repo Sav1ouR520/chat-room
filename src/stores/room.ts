@@ -1,16 +1,20 @@
-import type { MemberWithRoomId, Room } from "@/apis"
+import type { MemberWithUser, MemberWithRoomId, Room } from "@/apis"
 
 export const RoomStore = defineStore("RoomStore", {
-  state: (): { room: Room; member: MemberWithRoomId } => ({
+  state: (): { room: Room; own: MemberWithRoomId; members: MemberWithUser[] } => ({
     room: { roomId: "", roomIcon: "", roomName: "", createdTime: "", owner: { memberId: "", memberName: "", userId: "", joinTime: "", role: "user" } },
-    member: { roomId: "", memberId: "", memberName: "", joinTime: "", role: "admin" },
+    own: { roomId: "", memberId: "", memberName: "", joinTime: "", role: "admin" },
+    members: [],
   }),
   actions: {
     setRoom(room: Room) {
       this.room = room
     },
-    setMember(member: MemberWithRoomId) {
-      this.member = member
+    setOwn(own: MemberWithRoomId) {
+      this.own = own
+    },
+    setMembers(members: MemberWithUser[]) {
+      this.members = members
     },
   },
 })

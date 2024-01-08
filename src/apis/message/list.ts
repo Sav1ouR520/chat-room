@@ -5,20 +5,9 @@ import { request } from "@/utils"
 type GetMessageRequest = { roomId: string }
 
 // Response
-type ChatMessageItem = {
-  messageId: string
-  member: {
-    memberId: string
-    memberName: string
-  }
-  message: string
-  sendTime: string
-  user: {
-    userIcon: string
-  }
-}
-
+type ChatMessageItem = { messageId: string; memberId: string; message: string; sendTime: string }
 type GetMessageListResponse = ResponseData<ChatMessageItem[]>
+
 /**
  * 请求列表数据，返回所有列表和最新的一条聊天记录
  * @param roomId 聊天室的ID

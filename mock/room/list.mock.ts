@@ -1,5 +1,5 @@
 import { defineMock } from "vite-plugin-mock-dev-server"
-import { API_URL, rooms, members, messages, getUserId } from "../shared"
+import { API_URL, rooms, members, messages, getUserId, createApiResData } from "@shared"
 
 export default defineMock({
   url: API_URL + "/room/list",
@@ -18,7 +18,7 @@ export default defineMock({
         }
         return { ...room, code: undefined }
       })
-      res.end(JSON.stringify({ message: "聊天室列表获取成功", data, action: true, timestamp: Date.now() }))
+      res.end(createApiResData({ message: "聊天室列表获取成功", data }))
     }
   },
 })

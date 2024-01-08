@@ -16,7 +16,7 @@ const message = ref("")
 const { send } = useWS()
 const sendMessage = () => {
   if (message.value.length) {
-    send(JSON.stringify({ "roomId": room.room.roomId, "message": message.value, type: "message" }))
+    send(JSON.stringify({ data: { roomId: room.room.roomId, message: message.value }, type: "message", operation: "send" }))
     message.value = ""
   }
 }

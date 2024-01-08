@@ -1,5 +1,5 @@
 import { defineMock } from "vite-plugin-mock-dev-server"
-import { API_URL, getUserId, members, users } from "../shared"
+import { API_URL, createApiResData, getUserId, members, users } from "@shared"
 
 export default defineMock({
   url: API_URL + "/member/list",
@@ -14,9 +14,9 @@ export default defineMock({
           const user = users.value.find(user => user.userId === member.userId)
           return { ...member, userId: undefined, user: { userIcon: user!.userIcon, userId: user!.userId }, roomId: undefined }
         })
-        res.end(JSON.stringify({ message: "成员列表获取成功", data, action: true, timestamp: Date.now() }))
+        res.end(createApiResData({ message: "成员列表获取成功", data }))
       } else {
-        res.end(JSON.stringify({ message: "成员列表获取失败", data: null, action: false, timestamp: Date.now() }))
+        res.end(createApiResData({ message: "成员列表获取失败", action: false }))
       }
     }
   },

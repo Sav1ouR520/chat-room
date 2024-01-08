@@ -19,7 +19,7 @@ watch(route, () => run())
 // 请求用户在聊天室的个人信息
 const room = RoomStore()
 const { run } = useRequest(() => fetchGetOwnMemberInfo({ roomId: room.room.roomId }), {
-  onSuccess: ({ data }) => room.setMember(data)
+  onSuccess: ({ data }) => room.setOwn(data)
 })
 
 </script>

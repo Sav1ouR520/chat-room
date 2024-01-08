@@ -1,8 +1,8 @@
 import { createReadStream } from "node:fs"
 import { defineMock } from "vite-plugin-mock-dev-server"
-import * as os from "os"
+import os from "os"
 import path from "node:path"
-import { API_URL } from "../utils"
+import { API_URL } from "@shared"
 
 export default defineMock({
   url: API_URL + "/img/:id",

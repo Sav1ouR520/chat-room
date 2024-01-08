@@ -1,6 +1,6 @@
 <template>
   <div flex h-full flex-col justify-center items-center p-10 min-h-135>
-    <form sm-w-120 w-full>
+    <form sm-w-120 w-full @submit.prevent>
       <h1 text-center text-2xl font-bold pb-5>{{ $t("register.introduce") }}</h1>
       <InputItem v-bind="vaild.account" />
       <InputItem v-bind="vaild.code">

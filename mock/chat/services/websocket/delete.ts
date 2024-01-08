@@ -1,4 +1,4 @@
-import { Connection } from "../utils"
+import { Connection } from "@shared"
 import type { WebSocket } from "ws"
 
 // 将断开的websocket删除

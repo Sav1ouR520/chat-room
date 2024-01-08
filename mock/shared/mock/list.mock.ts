@@ -1,5 +1,5 @@
 import { defineMock } from "vite-plugin-mock-dev-server"
-import { API_URL, generateMockData, members, messages, rooms, users } from ".."
+import { API_URL, generateMockData, members, messages, rooms, users } from "@shared"
 
 export default defineMock([
   { url: API_URL + "/list/user", body: () => users.value },

@@ -16,7 +16,7 @@
         </div>
       </div>
       <div max-h-100 overflow-auto class="scrollbar-hidden" mb-2>
-        <template v-for="item in list" :key=item.memberId>
+        <template v-for="item in room.members" :key=item.memberId>
           <ChatMemberItem v-bind=item :modify=modify :reverse=reverse @member="getMemberId" />
         </template>
       </div>
@@ -25,7 +25,7 @@
 </template>
 
 <script setup lang="ts">
-import { fetchDeleteMember, fetchGetMemberList, type MemberWithUser } from '@/apis';
+import { fetchDeleteMember, fetchGetMemberList } from '@/apis';
 import { RoomStore } from '@/stores';
 
 // 获取聊天室信息
@@ -36,10 +36,7 @@ const route = useRoute()
 watch(route, () => getMemeber())
 
 // 获取聊天室成员列表
-const list = reactive<MemberWithUser[]>([])
-const { run: getMemeber } = useRequest(() => fetchGetMemberList({ roomId: room.room.roomId }), {
-  onSuccess: ({ data }) => (list.splice(0, list.length), list.push(...data))
-})
+const { run: getMemeber } = useRequest(() => fetchGetMemberList({ roomId: room.room.roomId }), { onSuccess: ({ data }) => (room.setMembers(data)) })
 
 // 浮动的成员列表
 const [info, box] = [ref(), ref()]

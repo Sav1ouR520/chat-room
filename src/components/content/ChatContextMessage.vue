@@ -16,8 +16,7 @@ const list = ref<ChatMessageItem[]>([])
 const room = RoomStore()
 
 // 监听是否切换房间
-const route = useRoute()
-watch(route, () => getMessage())
+watch(room, () => { if (room.members.length !== 0) getMessage() })
 
 // 请求聊天室消息
 const { run: getMessage } = useRequest(() => fetchGetMessage({ roomId: room.room.roomId }), { onSuccess: ({ data }) => list.value = data.reverse() })

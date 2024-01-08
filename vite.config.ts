@@ -100,11 +100,11 @@ export default defineConfig(({ mode, command }) => {
     resolve: {
       alias: {
         "@": fileURLToPath(new URL("./src", import.meta.url)),
+        "@shared": fileURLToPath(new URL("./mock/shared", import.meta.url)),
       },
     },
     server: {
       proxy: {
-        "/chat": "localhost:8080",
         "^/api": {
           target: "",
           changeOrigin: true,

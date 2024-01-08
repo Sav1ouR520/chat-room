@@ -1,5 +1,5 @@
 import { MockRequest } from "vite-plugin-mock-dev-server"
-import { ACCESS_KEY, Connection } from "../utils"
+import { ACCESS_KEY, Connection } from "@shared"
 import type { WebSocket } from "ws"
 import jwt from "jsonwebtoken"
 

@@ -1,8 +1,5 @@
 import { faker } from "@faker-js/faker"
-import { DEFAULT_USER, generateUser, users } from "./user.data"
-import { generateMember, members } from "./member.data"
-import { generateRandomMessage, messages } from "./message.data"
-import { generateRoom, rooms } from "./room.data"
+import { DEFAULT_USER, generateUser, users, generateMember, members, generateRandomMessage, messages, generateRoom, rooms } from "@shared"
 import _ from "lodash"
 
 const generateMockData = () => {

@@ -1,9 +1,10 @@
-import { members, generateMessage, messages, rooms, users, Connection } from ".."
+import { members, generateMessage, messages, rooms, users, Connection, WSRequestData, createApiResData } from "@shared"
 
 // 处理发过来的信息
-export const sendMessage = (connections: Connection[], userId: string, data: any) => {
+const sendMessage = (connections: Connection[], userId: string, data: WSRequestData) => {
   const roomId = data["roomId"]
   const member = members.value.find(member => member.userId === userId && member.roomId === roomId)
+
   // 判断用户是否存在于该房间
   if (member) {
     // 添加消息到数据库
@@ -29,14 +30,14 @@ export const sendMessage = (connections: Connection[], userId: string, data: any
 
       // 如果用户在线且再这个房间
       if (item) {
-        const data = {
-          message: "New Message",
-          timestamp: new Date(),
-          action: true,
-          data: { roomId, type: "message", message: { ...message, roomId: undefined, memberId: undefined, member: { memberId, memberName }, user: { userIcon } } },
-        }
-        connection.ws.send(JSON.stringify(data))
+        connection.ws.send(
+          createApiResData({
+            message: "New Message",
+            data: { roomId, type: "message", message: { ...message, roomId: undefined, memberId: undefined, member: { memberId, memberName }, user: { userIcon } } },
+          }),
+        )
       }
     })
   }
 }
+export { sendMessage }

@@ -1,4 +1,4 @@
-import { API_URL, getUserId, users } from "../shared"
+import { API_URL, createApiResData, getUserId, users } from "@shared"
 import { defineMock } from "vite-plugin-mock-dev-server"
 
 export default defineMock({
@@ -12,7 +12,7 @@ export default defineMock({
         if (req.body["userName"]) user.userName = req.body["userName"]
         if (req.body["userIcon"]) user.userIcon = "/api/img/" + req.body["userIcon"]["newFilename"]
       }
-      res.end(JSON.stringify({ message: "用户信息修改成功", data: null, action: true, timestamp: Date.now() }))
+      res.end(createApiResData({ message: "用户信息修改成功" }))
     }
   },
 })

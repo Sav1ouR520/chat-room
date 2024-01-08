@@ -1,5 +1,6 @@
 import { defineMockData } from "vite-plugin-mock-dev-server"
 import { faker } from "@faker-js/faker"
+
 type Member = { roomId: string; memberId: string; memberName: string; userId: string; joinTime: Date; role: "user" | "admin" }
 const members = defineMockData<Member[]>("members_mock", [])
 

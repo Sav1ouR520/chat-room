@@ -6,11 +6,20 @@
     },
     {
       "path": "./tsconfig.app.json"
-    }
+    },
+  ],
+  "include": [
+    "./mock/**/*",
   ],
   "compilerOptions": {
-    "types": [
-      "element-plus/global"
-    ]
+    "baseUrl": ".",
+    "composite": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "paths": {
+      "@shared": [
+        "./mock/shared"
+      ],
+    }
   }
 }

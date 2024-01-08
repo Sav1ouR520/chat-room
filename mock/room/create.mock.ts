@@ -1,6 +1,6 @@
 import { faker } from "@faker-js/faker"
 import { defineMock } from "vite-plugin-mock-dev-server"
-import { API_URL, generateMember, getUserId, members, rooms, users } from "../shared"
+import { API_URL, createApiResData, generateMember, getUserId, members, rooms, users } from "@shared"
 
 export default defineMock({
   url: API_URL + "/room",
@@ -20,7 +20,7 @@ export default defineMock({
         roomId,
         code: faker.string.nanoid(),
       })
-      res.end(JSON.stringify({ message: `成功创建聊天室`, data: null, action: true, timestamp: Date.now() }))
+      res.end(createApiResData({ message: "成功创建聊天室" }))
     }
   },
 })
