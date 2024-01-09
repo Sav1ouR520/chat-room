@@ -27,7 +27,7 @@ import { fetchModifyUser, fetchUserInfo } from '@/apis';
 const { data: user, run } = useRequest(fetchUserInfo, { onSuccess: ({ data }) => (modify.value.icon = data.userIcon, emit('icon', data.userIcon)) })
 
 // 设置上传图片的属性
-const modify = ref({ "fetchModify": fetchModifyUser, "name": "userIcon", "icon": "", "formIcon": 'userIcon' })
+const modify = ref({ "fetchModify": fetchModifyUser, type: "user", "name": "userIcon", "icon": "", "formIcon": 'userIcon' })
 
 // 切换修改用户名/密码
 const [value, toggle] = useToggle()

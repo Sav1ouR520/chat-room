@@ -28,14 +28,9 @@ const refresh = ref(Date.now())
 // 获取全局room的激活弹窗
 const active = inject<Ref<boolean>>('activeRoom')
 
-// 获取全局注入 refreshRoom
-const refreshRoom = inject<Ref<number>>('refreshRoom', ref(Date.now()))
-
-
 // 关闭弹窗
 const close = (value: string) => {
   active!.value = false
   if (value === 'inside' || value === 'update') refresh.value = Date.now()
-  value === 'update' && (refreshRoom.value = Date.now())
 }
 </script>

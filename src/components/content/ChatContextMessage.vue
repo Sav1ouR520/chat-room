@@ -9,6 +9,7 @@
 <script lang="ts" setup>
 import { fetchGetMessage, type ChatMessageItem } from '@/apis';
 import { RoomStore } from '@/stores';
+import type { SendMessage} from '@/types/ws-res-data';
 import { useWS } from '@/utils';
 const list = ref<ChatMessageItem[]>([])
 
@@ -24,9 +25,11 @@ const { run: getMessage } = useRequest(() => fetchGetMessage({ roomId: room.room
 // 获取最新的消息
 const { data: res } = useWS()
 watch(res, () => {
-  const data = JSON.parse(res.value!)
-  if (data['data']['type'] === 'message' && data['data']['roomId'] == room.room.roomId) {
-    list.value.unshift(data['data']['message'])
+  const resData: SendMessage= JSON.parse(res.value!)
+  const { wsData, type, operation } = resData.data
+  if (type === 'message' && operation === 'send' && wsData.roomId == room.room.roomId) {
+    const { message, messageId, memberId, sendTime } = wsData
+    list.value.unshift({ message, messageId, memberId, sendTime })
   }
 })
 

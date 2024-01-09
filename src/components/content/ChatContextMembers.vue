@@ -27,6 +27,8 @@
 <script setup lang="ts">
 import { fetchDeleteMember, fetchGetMemberList } from '@/apis';
 import { RoomStore } from '@/stores';
+import type { UpdateMemeberIcon } from '@/types/ws-res-data';
+import { useWS } from '@/utils';
 
 // 获取聊天室信息
 const room = RoomStore()
@@ -59,6 +61,17 @@ const getMemberId = (member: { memberId: string, value: boolean }) =>
 const { run: deleteMemebr } = useRequest(fetchDeleteMember, {
   onSuccess: ({ action }) => { if (action) { modifyToggle(), getMemeber() } }
   , manual: true
+})
+
+// 获取最新的消息
+const { data: res } = useWS()
+watch(res, () => {
+  const resData: UpdateMemeberIcon = JSON.parse(res.value!)
+  const { wsData, type, operation } = resData.data
+  if (type === 'member' && operation === 'updateIcon') {
+    const index = room.members.findIndex(item => item.user.userId === wsData.userId)
+    if (index >= 0) room.members[index].user.userIcon = wsData.userIcon
+  }
 })
 
 // 提交修改，如果数组为0就直接关闭

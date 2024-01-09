@@ -21,16 +21,14 @@
   </div>
 </template>
 <script setup lang="ts">
-import { useToast } from 'vue-toastification';
 import type { ResponseData, UploadAttr } from '@/types';
 import type UploadItemVue from '../form/UploadItem.vue';
 import vueCropper from '@/module/cropper'
-
-const toast = useToast();
+import { useWS } from '@/utils';
 
 // 设置默认图片
 const props = withDefaults(defineProps<{
-  icon: string, name: string, formIcon: string, params?: object,
+  icon: string, name: string, formIcon: string, params?: object, type: string
   fetchModify: (...arg: any[]) => Promise<ResponseData>
 }>(), { icon: "" })
 
@@ -67,9 +65,18 @@ const [readying, toggle] = useToggle()
 
 // 手动触发网络请求，并在成功后重置表单
 const { run } = useRequest(props.fetchModify, {
-  onSuccess: ({ action, message }) => { if (action) { (toast.success(message), emit('close', 'update'), option.img = "", upload.value?.clear()) } }
-  , onFinally: () => toggle(), manual: true
+  onSuccess: ({ action }) => {
+    if (action) {
+      emit('close', 'update')
+      option.img = ""
+      upload.value?.clear()
+      send(JSON.stringify({ type: props.type, operation: props.formIcon, data: props.params }))
+    }
+  }, onFinally: () => toggle(), manual: true
 })
+
+// 发送更新消息给其他人
+const { send } = useWS()
 
 // 验证表单 成功就发送请求
 const onSubmit = () => {

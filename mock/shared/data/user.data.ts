@@ -1,9 +1,9 @@
 import { defineMockData } from "vite-plugin-mock-dev-server"
 import { faker } from "@faker-js/faker"
 
-type User = { userId: string; account: string; password: string; userName: string; userIcon: string; registerTime: Date; refreshToken: string }[]
+type User = { userId: string; account: string; password: string; userName: string; userIcon: string; registerTime: Date; refreshToken: string }
 
-const users = defineMockData<User>("user", [])
+const users = defineMockData<User[]>("user", [])
 
 const DEFAULT_USER = [
   { userId: "MOCKUSERADMIN", account: "admin@admin.com", password: "admin", userName: faker.internet.userName(), userIcon: faker.internet.avatar(), registerTime: faker.date.past(), refreshToken: "" },

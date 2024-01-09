@@ -14,17 +14,27 @@
 import { RoomStore } from '@/stores';
 import { useWS } from '@/utils';
 
+// 创建WebSocket连接
+const { send } = useWS()
+
 // 当有房间显示聊天室，切换房间的更新聊天室
 const route = useRoute()
 const room = RoomStore()
-if (route.params['id']) room.room.roomId = route.params['id'] as string
-watch(route, () => room.room.roomId = route.params['id'] as string)
+
+// 获取房间id，并切换
+const roomId = ref(route.params['id'] as string)
+send(JSON.stringify({ data: { roomId: roomId.value ? roomId.value : null }, type: "room", operation: "switch" }))
+if (roomId.value) room.room.roomId = roomId.value
+
+watch(route, () => {
+  roomId.value = route.params['id'] as string
+  if (roomId) {
+    room.room.roomId = roomId.value
+    send(JSON.stringify({ data: { roomId: roomId.value }, type: "room", operation: "switch" }))
+  }
+})
 
 // 注入全局依赖 用于修改信息时，局部更新
-const [refreshUser, refreshRoom] = [ref(Date.now()), ref(Date.now())]
+const refreshUser = ref(Date.now())
 provide("refreshUser", refreshUser)
-provide("refreshRoom", refreshRoom)
-
-// 创建WebSocket连接
-useWS()
 </script>

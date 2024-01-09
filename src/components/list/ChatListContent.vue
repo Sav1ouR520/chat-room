@@ -12,6 +12,7 @@
 
 <script setup lang="ts">
 import { fetchGetList, type ChatListItem } from '@/apis';
+import type { SendMessage, UpdateRoomIcon } from '@/types/ws-res-data';
 import { useWS } from '@/utils';
 import { VueDraggable } from 'vue-draggable-plus'
 
@@ -20,11 +21,6 @@ const list = reactive<ChatListItem[]>([])
 const query = ref("")
 const { run } = useRequest((roomName?: string) => fetchGetList({ roomName }), { onSuccess: ({ data }) => (list.splice(0, list.length), list.push(...data)) })
 
-// 获取全局注入 refreshRoom
-const refreshRoom = inject<Ref<number>>('refreshRoom', ref(Date.now()))
-
-// 当修改房间信息时候更新列表信息
-watch(refreshRoom, () => query.value !== '' ? run(query.value) : run())
 watch(query, () => query.value !== '' ? run(query.value) : run())
 
 // 从全局事件总线获取roomName
@@ -35,16 +31,19 @@ instance!.proxy!.$Bus.on("room-name", (roomName: any) => query.value = roomName)
 // 获取最新的消息
 const { data: res } = useWS()
 watch(res, () => {
-  const data = JSON.parse(res.value!)
-  if (data['data']['type'] === 'message') {
-    const room = list.find(item => item.roomId === data['data']['roomId'])
-    room!.message = {
-      messageId: data['data']['message']['messageId'],
-      message: data['data']['message']['message'],
-      memberName: data['data']['message']['member']['memberName'],
-      memberId: data['data']['message']['member']['memberId'],
-      sendTime: data['data']['message']['sendTime'],
-    }
+  const resData: SendMessage = JSON.parse(res.value!)
+  const { wsData, type, operation } = resData.data
+  if (type === 'message' && operation === 'send') {
+    const { message, messageId, memberId, memberName, sendTime } = wsData
+    list.find(item => item.roomId === wsData.roomId)!.message = { message, messageId, memberId, memberName, sendTime }
+  }
+})
+
+watch(res, () => {
+  const resData: UpdateRoomIcon = JSON.parse(res.value!)
+  const { wsData, type, operation } = resData.data
+  if (type === "room" && operation === "updateIcon") {
+    list.find(item => item.roomId === wsData.roomId)!.roomIcon = wsData['roomIcon']
   }
 })
 </script>
